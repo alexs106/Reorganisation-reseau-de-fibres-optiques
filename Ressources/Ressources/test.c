@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Chaine.h"
+
+
 Chaines* lectureChaine(FILE *f){
     if(f == NULL){
         printf("Erreur d'ouverture du fichier\n");
         exit(1);
     }
+    
     Chaines* new_chaine = malloc(sizeof(Chaines));
 
     int nbchaine;
