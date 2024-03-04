@@ -23,18 +23,18 @@ Chaines* lectureChaine(FILE *f){
     int num_chaine;
     int nb_points;
     CellChaine* tete_lc;
+    char tab[256];
 
-    while((fgets(buffer,256,f)!=NULL)){
-        sscanf(buffer,"%d %d %s",&num_chaine,&nb_points,buffer);
-        
+    while((fgets(buffer,sizeof(buffer),f)!=NULL)){
+        sscanf(buffer,"%d %d %s\n",&num_chaine,&nb_points,buffer);
         CellChaine* new_lc = malloc(sizeof(CellChaine));
         new_lc->numero = num_chaine;
-
         CellPoint* tete_l;
         for(int i=0;i<nb_points;i++){
-            float px,py;
+            double px,py;
             CellPoint* new_points = malloc(sizeof(CellPoint));
-            sscanf(buffer,"%.2f %.2f %s",&px,&py,buffer);
+          
+            sscanf(buffer,"%.lf %.lf %s",&px,&py,buffer);
             new_points->x = px;
             new_points->y = py;
             if(i==0){
@@ -60,7 +60,7 @@ Chaines* lectureChaine(FILE *f){
     return new_chaine; 
 }
 
-
+/*
 
 void ecrireChaine(Chaines *C, FILE *f){
     if(f == NULL){
@@ -89,13 +89,29 @@ void ecrireChaine(Chaines *C, FILE *f){
         fprintf(f,"%d %s\n",nb_points,buffer);
     }
 }
-
+*/
  
 int main(){
     FILE *f = fopen("00014_burma.cha", "r");
     Chaines * test = lectureChaine(f); 
-    printf("%d\n", test->nbChaines); 
-    printf("%d\n", test->gamma);
-    ecrireChaine(test, "test.txt"); 
+    
+    while(test->chaines){
+        printf("%d ",test->chaines->numero);
+        while(test->chaines->points){
+            printf("%.2f %.2f ",test->chaines->points->x,test->chaines->points->y);
+            test->chaines->points = test->chaines->points->suiv;
+        }
+        printf("\n");
+        test->chaines = test->chaines->suiv;
+    }
+    printf("\n");
+
+    
+    
+    
+    
+    
+    
+    //ecrireChaine(test, "test.txt"); 
     return 0; 
 }
