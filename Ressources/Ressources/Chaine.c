@@ -33,7 +33,7 @@ Chaines* lectureChaines(FILE *f){
     while(i<nbchaine){
       
         fscanf(f,"%d %d",&num_chaine,&nb_points); 
-        printf("num chaine : %d et nb_points = %d\n",num_chaine,nb_points);
+        //printf("num chaine : %d et nb_points = %d\n",num_chaine,nb_points);
         CellChaine* new_lc = malloc(sizeof(CellChaine));
         new_lc->numero = num_chaine;
         CellPoint* tete_l;
@@ -43,7 +43,7 @@ Chaines* lectureChaines(FILE *f){
             fscanf(f,"%lf %lf",&px,&py);
             new_points->x = px;
             new_points->y = py;
-            printf("x = %.2lf, y = %.2lf\n", px, py);
+            //printf("x = %.2lf, y = %.2lf\n", px, py);
             
             if(i==0){
                 new_points->suiv = NULL;
@@ -85,23 +85,32 @@ void ecrireChaines(Chaines *C, FILE *f){
     
     //Pas fini, problème avec nb points donc on fait un buffer
     //Check compilation S
+
+
     while(courant_chaine!=NULL){
-        fprintf(f,"%d ",courant_chaine->numero);
 
-        CellPoint* courant_points = courant_chaine->points;
-        char buffer[256];
+        CellPoint *chainePoint = courant_chaine->points;
         int nb_points;
-        char totalPoints[256]; 
 
-        while(courant_points!=NULL){
-            sprintf(buffer,"%f %f ",courant_points->x,courant_points->y);
-            courant_points = courant_points->suiv;
+        //Ce while calcule le nombre de points de la chaine.
+        while(chainePoint != NULL){
             nb_points++;
-            strcat(totalPoints,buffer); 
+            chainePoint = chainePoint->suiv;
         }
-        
-        fprintf(f,"%d %s\n",nb_points,totalPoints);
+        int num_chaine = courant_chaine->numero;
+        fprintf(f,"%d %d ",num_chaine,nb_points);
+
+        //Ce while ecrit les points dans le fichier.
+        CellPoint *courant_point = courant_chaine->points;
+        while(courant_point != NULL){
+            fprintf(f,"%.2f %.2f ",courant_point->x,courant_point->y);
+            courant_point = courant_point->suiv;
+        }
+        fprintf(f,"\n");
+        courant_chaine = courant_chaine->suiv;
     }
+    fclose(f);
+
 }
 
 void afficheChainesSVG(Chaines *C, char* nomInstance){
@@ -144,4 +153,43 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
     SVGfinalize(&svg);
 }
 
-double longueurChaine(CellChaine *c); 
+double longueurChaine(CellChaine *c){
+    CellPoint* courant = c->points->suiv;
+    CellPoint* prec = c->points;
+    double longueur;
+
+    while(courant != NULL){
+        longueur += sqrt(pow((courant->x - prec->x),2) + pow((courant->y - prec->y),2));
+        prec = courant;
+        courant =  courant->suiv;
+    }
+    return longueur;
+}
+
+double longueurTotale(Chaines *C){
+
+    CellChaine* c_chaine = C->chaines;
+    double total;
+    while(c_chaine != NULL){
+        total += longueurChaine(c_chaine);
+        c_chaine = c_chaine->suiv;
+    }
+    return total;
+
+}
+
+
+int comptePointsTotal(Chaines *C){
+    int nb_points = 0;
+    CellChaine* courant_chaine = C->chaines;
+
+    while(courant_chaine != NULL){
+        CellPoint* courant_point = courant_chaine->points;
+        while(courant_point != NULL){
+            nb_points++;
+            courant_point = courant_point->suiv;
+        }
+        courant_chaine = courant_chaine->suiv;
+    }
+    return nb_points;
+}
