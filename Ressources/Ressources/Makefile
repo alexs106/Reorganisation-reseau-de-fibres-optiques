@@ -13,3 +13,6 @@ ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h
 clean :
 	rm -f *.o
 	rm -f main
+	rm -f ChaineMain
+	rm -f Chaine
+	rm -f test
