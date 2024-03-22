@@ -37,5 +37,11 @@ void ecrireReseau(Reseau *R, FILE *f);
 int nbLiaisons(Reseau *R);
 int nbCommodites(Reseau *R);
 void afficheReseauSVG(Reseau *R, char* nomInstance);
+
+//Fonctions pour créer réseau, noeuds, etc etc //MODIFIE CE COMMENTAIRE
+Reseau *creer_reseau();
+CellCommodite* creer_cell_commodite();
+CellNoeud* creer_cell_noeud();
+Noeud* creer_noeud();
 #endif
 

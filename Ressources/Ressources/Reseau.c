@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Reseau.h"
+#include "Chaine.h"
 
 //Renvoie un reseau vide
 Reseau *creer_reseau(){
@@ -9,6 +10,7 @@ Reseau *creer_reseau(){
     reseau->gamma = 0;
     reseau->noeuds = NULL;
     reseau->commodites = NULL;
+    return reseau;
 }
 
 //Renvoie une commodité vide
@@ -37,18 +39,18 @@ Noeud* creer_noeud(){
     n->voisins = NULL;
     return n; 
 }
-/*
+
 //Ajoute voisin aux voisins de n
 void ajouter_voisin(Noeud* n, Noeud* voisin){
-    if(voisin == NULL || n = voisin){ //POURQUOI UNE ERREUR?????
-        return ;
+    if(voisin == NULL || n == voisin){ 
+        return; 
     }
 
     CellNoeud* liste_voisin = n->voisins; //on recupère la liste des voisins
 
     while(liste_voisin){ //on vérifie si voisin est parmis les voisins
         if(liste_voisin->nd == voisin){ //si oui, CellNoeud contient le même noeud voisin
-            return ;
+            return;
         }
         liste_voisin = liste_voisin->suiv;
     }
@@ -59,38 +61,11 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
     new_voisin->suiv = n->voisins; //on insère le voisin dans la liste des voisins
     n->voisins = new_voisin; 
 
-    return ;
+    return;
 }
-*/
 
 //Retourne le noeud de R correspondant, sinon créer le noeud et l'ajoute dans R
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
-   /* CellNoeud* liste = R->noeuds; //PARTIE D'alex
-
-    while(liste != NULL){
-        if((liste->nd->x == x) && (liste->nd->y == y)){
-            return liste->nd; 
-        }
-        liste = liste->suiv;
-    }
-
-    //dans le cas o`u le noeud n'existe pas, on le créé
-    Noeud* new_noeud = creer_noeud();
-    new_noeud->x = x;
-    new_noeud->y = y;
-    new_noeud->num = R->nbNoeuds +1;
-
-    //création de la cellule
-    CellNoeud* new_celln = (CellNoeud*) malloc(sizeof(CellNoeud));
-    new_celln->nd = new_noeud; //on affecte le noeud dans la cellule
-    new_celln->suiv = R->noeuds; //on ajoute à la suite de la liste 
-    // A verifier !!!
-
-    R->noeuds = new_celln;
-    //ajout de R
-    //A COMPLETER, COURAGE NOAH ;)
-    */
-
     CellNoeud* cell_noeuds = R->noeuds;
     if(cell_noeuds != NULL){ //on regarde si le premier élément est NULL.
         if((cell_noeuds->nd->x == x) && (cell_noeuds->nd->y == y)){ //on regarde si le premier l'élément contient les paramètres x et y.
@@ -111,10 +86,11 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
 
     /*si les paramètres x et y ne sont pas présent dans liste, on va alors créer une nouvelle struc Noeud et une nouvelle struc CellNoeud.
     Puis ajouter CellNoeud à la fin de la liste ou au début si elle est vide. */
+    R->nbNoeuds = R->nbNoeuds + 1;
     Noeud* new_noeud = creer_noeud();
     new_noeud->x = x;
     new_noeud->y = y;
-    new_noeud->num = R->nbNoeuds + 1;
+    new_noeud->num = R->nbNoeuds;
     new_noeud->voisins = NULL;
 
     CellNoeud* new_celln = (CellNoeud*) malloc(sizeof(CellNoeud));
@@ -127,5 +103,56 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     else{
         cell_noeuds->suiv = new_celln; 
     }
-    return NULL;
+    return new_noeud;
+}
+
+Reseau* reconstitueReseauListe(Chaines *C){
+    //Création du reseau
+    Reseau* reseau = creer_reseau();
+    reseau->gamma = C->gamma;
+
+    //On recupère les chaines de la Chaine C
+    CellChaine* liste = C->chaines;
+
+    //On parcourt toutes les chaines
+    while(liste){
+        //On crée la commodité
+        CellCommodite* commodite = creer_cell_commodite();
+        
+        CellPoint* liste_points = liste->points;  //liste des points dans la chaine
+        CellPoint* precedant = liste_points, *suiv = NULL; //On garde le precedant et le suivant
+
+        //Premier point, on le cherche et le rajoute s'il n'est pas dans le réseau
+        Noeud* n = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y); 
+
+        commodite->extrA = n; 
+
+        //On parcourt tous les CellPoints
+        while(liste_points->suiv != NULL){
+            suiv = liste_points->suiv; 
+            Noeud* n = rechercheCreeNoeudListe(reseau, liste_points->x, liste_points->y);
+
+            //Ajout des voisins au noeud n2
+            ajouter_voisin(n,rechercheCreeNoeudListe(reseau, precedant->x, precedant->y));
+            ajouter_voisin(n,rechercheCreeNoeudListe(reseau, suiv->x, suiv->y));
+
+            //on passe au point suivant
+            precedant = liste_points;
+            liste_points = liste_points->suiv; 
+        }
+
+        commodite->extrB = rechercheCreeNoeudListe(reseau,liste_points->x, liste_points->y);
+        //on rajoute le voisin précédant vu qu'on est dans l'extremité B
+        ajouter_voisin(commodite->extrB, rechercheCreeNoeudListe(reseau, precedant->x, precedant->y));
+
+        //inserer la commodite au reseau
+        commodite->suiv = reseau->commodites;
+        reseau->commodites = commodite; 
+        
+        //On a rajoute la commodite et le noeud de la chaine au réseau, donc on passe à la chaine suivante
+
+        liste = liste->suiv; 
+    }
+    //on retourne le reseau
+    return reseau; 
 }
