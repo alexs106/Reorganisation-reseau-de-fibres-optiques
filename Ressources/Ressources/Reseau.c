@@ -40,6 +40,12 @@ Noeud* creer_noeud(){
     return n; 
 }
 
+CellNoeud* ajout_noeud(CellNoeud *tete, CellNoeud *elem){
+    elem->suiv = tete;
+    tete = elem;
+    return tete; 
+}
+
 //Ajoute voisin aux voisins de n
 void ajouter_voisin(Noeud* n, Noeud* voisin){
     if(voisin == NULL || n == voisin){ 
@@ -63,7 +69,7 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
 
     return;
 }
-
+/*
 //Retourne le noeud de R correspondant, sinon créer le noeud et l'ajoute dans R
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud* cell_noeuds = R->noeuds;
@@ -86,6 +92,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
 
     /*si les paramètres x et y ne sont pas présent dans liste, on va alors créer une nouvelle struc Noeud et une nouvelle struc CellNoeud.
     Puis ajouter CellNoeud à la fin de la liste ou au début si elle est vide. */
+    /*
     R->nbNoeuds = R->nbNoeuds + 1;
     Noeud* new_noeud = creer_noeud();
     new_noeud->x = x;
@@ -104,6 +111,35 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         cell_noeuds->suiv = new_celln; 
     }
     return new_noeud;
+}
+*/
+
+
+
+Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
+    CellNoeud* cn = R->noeuds;
+    while(cn!=NULL){
+        Noeud* noe = cn -> nd;
+        if(noe->x == x && noe->y == y){
+            return noe;
+        }
+        cn = cn->suiv; 
+    }
+
+    R->nbNoeuds = R->nbNoeuds + 1;
+    Noeud* new_noeud = creer_noeud();
+    new_noeud->x = x;
+    new_noeud->y = y;
+    new_noeud->num = R->nbNoeuds;
+    new_noeud->voisins = NULL;
+
+    CellNoeud* new_celln = creer_cell_noeud();
+    new_celln->nd = new_noeud;
+    new_celln->suiv = NULL; 
+
+    R->noeuds = ajout_noeud(R->noeuds, new_celln);
+    return new_noeud; 
+    
 }
 
 Reseau* reconstitueReseauListe(Chaines *C){
@@ -155,4 +191,38 @@ Reseau* reconstitueReseauListe(Chaines *C){
     }
     //on retourne le reseau
     return reseau; 
+}
+
+
+int nbCommodites(Reseau *R){
+    CellCommodite* cell_com = R->commodites;
+    int nb = 0;
+    while(cell_com != NULL){
+        nb++;
+        cell_com = cell_com->suiv;
+    }
+    return nb;
+}
+
+int nbLiaisons(Reseau *R){
+    //on regarde tous les noeuds (la liste commence par 12 )
+    //on regarde ses voisin, si ses voisins sont plus grands
+    //que lui on le considère pas sinon on rajoute 1 à nb liason.
+
+    CellNoeud* cell_n = R->noeuds;
+    int nb_liasons = 0;
+    while(cell_n != NULL){
+        Noeud* n = cell_n->nd;
+        CellNoeud* voisins = n->voisins;
+
+        while(voisins != NULL){
+           
+            if(n->num > voisins->nd->num){
+                nb_liasons++;
+            }
+            voisins = voisins->suiv;
+        }
+        cell_n = cell_n->suiv;
+    }
+    return nb_liasons;
 }
