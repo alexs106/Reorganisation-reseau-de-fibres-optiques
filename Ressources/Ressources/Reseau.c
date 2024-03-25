@@ -210,7 +210,7 @@ int nbLiaisons(Reseau *R){
     //que lui on le considère pas sinon on rajoute 1 à nb liason.
 
     CellNoeud* cell_n = R->noeuds;
-    int nb_liasons = 0;
+    int nb_liaisons = 0;
     while(cell_n != NULL){
         Noeud* n = cell_n->nd;
         CellNoeud* voisins = n->voisins;
@@ -218,11 +218,70 @@ int nbLiaisons(Reseau *R){
         while(voisins != NULL){
            
             if(n->num > voisins->nd->num){
-                nb_liasons++;
+                nb_liaisons++;
             }
             voisins = voisins->suiv;
         }
         cell_n = cell_n->suiv;
     }
-    return nb_liasons;
+    return nb_liaisons;
+}
+
+
+/*Exercice 3 - question n°2 */
+void ecrireReseau(Reseau *R, FILE *f){
+    if(f == NULL){
+       printf("Erreur d'ouverture du fichier\n");
+       exit(1);
+    }
+    int nb_noeuds = R->nbNoeuds;
+    fprintf(f,"NbNoeuds: %d\n",nb_noeuds);
+
+    int nb_liaisons = nbLiaisons(R);
+    fprintf(f,"NbLiaisons: %d\n",nb_liaisons);
+
+    int nb_com = nbCommodites(R);
+    fprintf(f,"NbCommodites: %d\n",nb_com);
+
+    int gamma = R->gamma;
+    fprintf(f,"Gamma: %d\n",gamma);
+
+    fprintf(f,"\n");
+
+    //écriture des noeuds dans le fichier (ligne 6 à 17 voir énoncé).
+    CellNoeud* cell_n = R->noeuds;
+
+    while(cell_n != NULL){
+        Noeud* n = cell_n->nd;
+        fprintf(f,"v %d %.6f %.6f\n",n->num,n->x,n->y);
+        cell_n = cell_n->suiv;
+    }
+
+    fprintf(f,"\n");
+
+    //écriture des liaisons dans le fichier (ligne 19 à 33 voir énoncé).
+    CellNoeud* cell_n_l = R->noeuds;
+    while(cell_n_l != NULL){
+        Noeud* n_l = cell_n_l->nd;
+        CellNoeud* voisins = n_l->voisins;
+        
+        while(voisins != NULL){
+            if(n_l->num > voisins->nd->num){
+                fprintf(f,"l %d %d\n",voisins->nd->num,n_l->num);
+            }
+            voisins = voisins->suiv;
+        }
+        cell_n_l = cell_n_l->suiv;
+    }
+
+    fprintf(f,"\n");
+    
+    //écriture des commodités dans le fichier (ligne 35 à 42).
+    CellCommodite *cell_c = R->commodites;
+    while(cell_c != NULL){
+        fprintf(f,"k %d %d\n",cell_c->extrA->num,cell_c->extrB->num);
+        cell_c = cell_c->suiv;
+    }
+
+    fclose(f); //fermeture du fichier
 }

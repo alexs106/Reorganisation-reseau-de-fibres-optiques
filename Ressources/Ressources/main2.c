@@ -13,7 +13,13 @@ int main(){
     Chaines * test = lectureChaines(f);
 
     Reseau* r2 = reconstitueReseauListe(test); 
-    CellNoeud* c = r2->noeuds;
+    
+    FILE *fw = fopen("test_res.txt", "w"); 
+    ecrireReseau(r2,fw);
+
+
+    //CellNoeud* c = r2->noeuds;
+
     //c= c->suiv->suiv; 
 
     //afficheChainesSVG(test,"testRes"); //REGARDER
@@ -30,8 +36,8 @@ int main(){
     }
     */
    //int nb = nbLiaisons(r2); 
-   int nb = nbCommodites(r2); 
-   printf("%d\n", nb); 
+   //int nb = nbCommodites(r2); 
+   //printf("%d\n", nb); 
 
     return 0;
     
