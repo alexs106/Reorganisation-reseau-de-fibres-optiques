@@ -1,5 +1,6 @@
 #include "Reseau.h"
 #include "Chaine.h"
+#include "Hachage.h"
 #include <stdio.h>
 
 int main(){
@@ -16,13 +17,12 @@ int main(){
     
     FILE *fw = fopen("test_res.txt", "w"); 
     ecrireReseau(r2,fw);
+    afficheReseauSVG(r2,"reseau"); 
 
 
     //CellNoeud* c = r2->noeuds;
 
     //c= c->suiv->suiv; 
-
-    //afficheChainesSVG(test,"testRes"); //REGARDER
     /*
     while(c){
         printf("x=%.2f y=%.2f num=%d\n",c->nd->x,c->nd->y,c->nd->num);
@@ -39,6 +39,16 @@ int main(){
    //int nb = nbCommodites(r2); 
    //printf("%d\n", nb); 
 
+/*------------------------------------------------------------------------------------------------*/
+/*
+//EXERCICE 4 FAIRE LE TEST DE LA QUESTION 4 !!!!!!
+
+    for(int x=1; x<=10;x++){
+        for(int y=1; y<=10; y++){
+            printf("x=%d ,y =%d, cle= %d\n", x, y, cle(x,y)); 
+        }
+    }
+*/
     return 0;
     
 }

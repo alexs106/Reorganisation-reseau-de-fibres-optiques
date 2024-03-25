@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "Reseau.h"
 #include "Chaine.h"
+#include "Hachage.h"
+#include <math.h>
+#include "SVGwriter.h"
 
 //Renvoie un reseau vide
 Reseau *creer_reseau(){
@@ -69,52 +72,6 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
 
     return;
 }
-/*
-//Retourne le noeud de R correspondant, sinon créer le noeud et l'ajoute dans R
-Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
-    CellNoeud* cell_noeuds = R->noeuds;
-    if(cell_noeuds != NULL){ //on regarde si le premier élément est NULL.
-        if((cell_noeuds->nd->x == x) && (cell_noeuds->nd->y == y)){ //on regarde si le premier l'élément contient les paramètres x et y.
-            return cell_noeuds->nd; 
-        }
-        else{
-            while(cell_noeuds->suiv != NULL){ //on parcourt la liste temps que son suivant n'est pas NULL.
-                if((cell_noeuds->nd->x == x) && (cell_noeuds->nd->y == y)){ // on fait la comparaison.
-                    return  cell_noeuds->nd;
-                }
-                cell_noeuds = cell_noeuds->suiv;
-            }
-            if((cell_noeuds->nd->x == x) && (cell_noeuds->nd->y == y)){
-                return cell_noeuds->nd;
-            }
-        }
-    }
-
-    /*si les paramètres x et y ne sont pas présent dans liste, on va alors créer une nouvelle struc Noeud et une nouvelle struc CellNoeud.
-    Puis ajouter CellNoeud à la fin de la liste ou au début si elle est vide. */
-    /*
-    R->nbNoeuds = R->nbNoeuds + 1;
-    Noeud* new_noeud = creer_noeud();
-    new_noeud->x = x;
-    new_noeud->y = y;
-    new_noeud->num = R->nbNoeuds;
-    new_noeud->voisins = NULL;
-
-    CellNoeud* new_celln = (CellNoeud*) malloc(sizeof(CellNoeud));
-    new_celln->nd = new_noeud; //on affecte le noeud dans la cellule
-    new_celln->suiv = NULL;
-
-    if(cell_noeuds == NULL){ // on est dans le cas ou cell_noeuds ne contient pas de noeuds.
-        R->noeuds = new_celln;
-    }
-    else{
-        cell_noeuds->suiv = new_celln; 
-    }
-    return new_noeud;
-}
-*/
-
-
 
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud* cn = R->noeuds;
@@ -285,3 +242,83 @@ void ecrireReseau(Reseau *R, FILE *f){
 
     fclose(f); //fermeture du fichier
 }
+
+void afficheReseauSVG(Reseau *R, char* nomInstance){
+    CellNoeud *courN,*courv;
+    SVGwriter svg;
+    double maxx=0,maxy=0,minx=1e6,miny=1e6;
+
+    courN=R->noeuds;
+    while (courN!=NULL){
+        if (maxx<courN->nd->x) maxx=courN->nd->x;
+        if (maxy<courN->nd->y) maxy=courN->nd->y;
+        if (minx>courN->nd->x) minx=courN->nd->x;
+        if (miny>courN->nd->y) miny=courN->nd->y;
+        courN=courN->suiv;
+    }
+    SVGinit(&svg,nomInstance,500,500);
+    courN=R->noeuds;
+    while (courN!=NULL){
+        SVGpoint(&svg,500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+        courv=courN->nd->voisins;
+        while (courv!=NULL){
+            if (courv->nd->num<courN->nd->num)
+                SVGline(&svg,500*(courv->nd->x-minx)/(maxx-minx),500*(courv->nd->y-miny)/(maxy-miny),500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+            courv=courv->suiv;
+        }
+        courN=courN->suiv;
+    }
+    SVGfinalize(&svg);
+}
+
+
+int cle(double x,double y){
+    int res = (y+(x+y)*(x+y+1))/2;
+    return res; 
+}
+
+int hachage(int k,TableHachage* h){
+    int M = h->tailleMax;
+    double A = (sqrt(5)-1)/2;
+    int tmp = k*A; 
+    return M * (k*A - tmp); 
+}
+
+//A TESTER, ELLE COMPILE
+Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage*H, double x, double y){
+    
+    int c = cle(x,y);
+    int indice = hachage(c,H);
+
+    CellNoeud* cell_n = H->T[indice];
+
+    while(cell_n != NULL){
+        Noeud* n = cell_n->nd;
+        if((n->x == x) && (n->y == y)){
+            return n;
+        }
+        cell_n = cell_n->suiv;
+    }
+    //Création du noeud
+    Noeud* new_noeud = creer_noeud();
+    new_noeud->x = x;
+    new_noeud->y = y;
+    new_noeud->num = R->nbNoeuds;
+    new_noeud->voisins = NULL;
+
+    //Création de la cellule noeud
+    CellNoeud* new_celln = creer_cell_noeud();
+    new_celln->nd = new_noeud;
+    new_celln->suiv = NULL; 
+
+    //Ajout dans la table de hachage
+    new_celln->suiv = H->T[indice];
+    H->T[indice] = new_celln;
+
+    //Ajout dans le réseau
+    R->nbNoeuds = R->nbNoeuds + 1;
+    R->noeuds = ajout_noeud(R->noeuds, new_celln);
+    
+    return new_noeud;
+}
+

@@ -11,6 +11,6 @@ int main(){
     printf("%.4f\n",longueurTotale(test));
     printf("%d\n",comptePointsTotal(test));
    
-    afficheChainesSVG(test,"test"); 
+    afficheChainesSVG(test,"chaine"); 
     return 0; 
 }

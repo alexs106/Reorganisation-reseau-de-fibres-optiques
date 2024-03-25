@@ -7,10 +7,10 @@ res : Chaine.o SVGwriter.o Reseau.o main2.o
 Chaine.o: Chaine.c SVGwriter.h
 	gcc -c Chaine.c -o Chaine.o -lm
 
-Reseau.o: Reseau.c Chaine.h
+Reseau.o: Reseau.c Chaine.h Hachage.h 
 	gcc -c Reseau.c -o Reseau.o
 
-main2.o : main2.c Reseau.h Chaine.h
+main2.o : main2.c Reseau.h Chaine.h Hachage.h
 	gcc -c main2.c -o main2.o 
 
 SVGwriter.o: SVGwriter.c SVGwriter.h
@@ -26,3 +26,4 @@ clean :
 	rm -f Chaine
 	rm -f test
 	rm -f main2
+	rm -f Hachage 
