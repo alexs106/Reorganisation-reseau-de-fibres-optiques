@@ -272,53 +272,43 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
 }
 
 
-int cle(double x,double y){
-    int res = (y+(x+y)*(x+y+1))/2;
-    return res; 
-}
+//Fonctions de libération de mémoire
 
-int hachage(int k,TableHachage* h){
-    int M = h->tailleMax;
-    double A = (sqrt(5)-1)/2;
-    int tmp = k*A; 
-    return M * (k*A - tmp); 
-}
-
-//A TESTER, ELLE COMPILE
-Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage*H, double x, double y){
-    
-    int c = cle(x,y);
-    int indice = hachage(c,H);
-
-    CellNoeud* cell_n = H->T[indice];
-
-    while(cell_n != NULL){
-        Noeud* n = cell_n->nd;
-        if((n->x == x) && (n->y == y)){
-            return n;
-        }
-        cell_n = cell_n->suiv;
+//Libération de mémoire noeud
+void liberer_noeud(Noeud *n){
+    CellNoeud* courant;
+    while(n->voisins){
+        courant = n->voisins;
+        n->voisins = n->voisins->suiv;
+        free(courant); 
     }
-    //Création du noeud
-    Noeud* new_noeud = creer_noeud();
-    new_noeud->x = x;
-    new_noeud->y = y;
-    new_noeud->num = R->nbNoeuds;
-    new_noeud->voisins = NULL;
-
-    //Création de la cellule noeud
-    CellNoeud* new_celln = creer_cell_noeud();
-    new_celln->nd = new_noeud;
-    new_celln->suiv = NULL; 
-
-    //Ajout dans la table de hachage
-    new_celln->suiv = H->T[indice];
-    H->T[indice] = new_celln;
-
-    //Ajout dans le réseau
-    R->nbNoeuds = R->nbNoeuds + 1;
-    R->noeuds = ajout_noeud(R->noeuds, new_celln);
-    
-    return new_noeud;
+    free(n); 
 }
 
+//Libération de mémoire CellNoeud
+void liberer_CellNoeud(CellNoeud *cn){
+    CellNoeud *tmp = NULL;
+    while(cn){
+        tmp = cn->suiv;
+        liberer_noeud(cn->nd);
+        free(cn);
+        cn = tmp; 
+    }
+}
+
+//Libération de mémoire CellComodite
+void liberer_CellComodite(CellCommodite *cc){
+    CellCommodite *tmp = NULL;
+    while(cc){
+        tmp = cc->suiv;
+        free(cc);
+        cc = tmp; 
+    }
+}
+
+//Libération de mémoire Reseau
+void liberer_reseau(Reseau *r){
+    liberer_CellNoeud(r->noeuds);
+    liberer_CellComodite(r->commodites);
+    free(r); 
+}

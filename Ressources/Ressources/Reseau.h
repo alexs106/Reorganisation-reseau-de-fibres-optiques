@@ -43,5 +43,13 @@ Reseau *creer_reseau();
 CellCommodite* creer_cell_commodite();
 CellNoeud* creer_cell_noeud();
 Noeud* creer_noeud();
+CellNoeud* ajout_noeud(CellNoeud *tete, CellNoeud *elem);
+void ajouter_voisin(Noeud* n, Noeud* voisin);
+
+//Fonctions pour libérer la mémoire
+void liberer_noeud(Noeud *n);
+void liberer_CellNoeud(CellNoeud *cn); 
+void liberer_CellComodite(CellCommodite *cc);
+void liberer_reseau(Reseau *r); 
 #endif
 

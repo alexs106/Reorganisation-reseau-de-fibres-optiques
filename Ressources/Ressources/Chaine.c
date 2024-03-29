@@ -193,3 +193,38 @@ int comptePointsTotal(Chaines *C){
     }
     return nb_points;
 }
+
+//Fonction de libération d'espace
+
+//Libérer CellPoint
+void liberer_CellPoint(CellPoint* cp){
+    if(cp){
+        CellPoint* tmp = NULL;
+        while(cp){
+            tmp = cp->suiv;
+            free(cp);
+            cp = tmp; 
+        }
+    }
+}
+
+//Libérer CellChaine
+void liberer_CellChaine(CellChaine* cc){
+    if(cc){
+        CellChaine* tmp = NULL;
+        while(cc){
+            liberer_CellPoint(cc->points);
+            tmp = cc->suiv;
+            free(cc);
+            cc=tmp; 
+        }
+    }
+}
+
+//Libérer Chaines
+void liberer_Chaines(Chaines *c){
+    if(c){
+        liberer_CellChaine(c->chaines);
+        free(c); 
+    }
+}

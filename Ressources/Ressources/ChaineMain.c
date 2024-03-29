@@ -6,11 +6,14 @@
 int main(){
     FILE *f = fopen("00014_burma.cha", "r");
     FILE *f2 = fopen("test.txt", "w"); 
-    Chaines * test = lectureChaines(f);
-    ecrireChaines(test, f2); 
-    printf("%.4f\n",longueurTotale(test));
-    printf("%d\n",comptePointsTotal(test));
-   
-    afficheChainesSVG(test,"chaine"); 
+    Chaines * test_chaine = lectureChaines(f);
+    ecrireChaines(test_chaine, f2); //IL Y A UNE ERREUR DANS LE FPRINTF DE ECRIRECHAINES
+    printf("%.4f\n",longueurTotale(test_chaine));
+    printf("%d\n",comptePointsTotal(test_chaine));
+    
+    afficheChainesSVG(test_chaine,"chaine"); 
+    liberer_Chaines(test_chaine); 
     return 0; 
+
+    //CHECK VALGRIND ERRORS
 }

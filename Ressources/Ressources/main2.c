@@ -19,6 +19,10 @@ int main(){
     ecrireReseau(r2,fw);
     afficheReseauSVG(r2,"reseau"); 
 
+    //Libération de mémoire
+    liberer_reseau(R);
+    liberer_reseau(r2);
+    liberer_Chaines(test);  
 
     //CellNoeud* c = r2->noeuds;
 
@@ -39,16 +43,6 @@ int main(){
    //int nb = nbCommodites(r2); 
    //printf("%d\n", nb); 
 
-/*------------------------------------------------------------------------------------------------*/
-/*
-//EXERCICE 4 FAIRE LE TEST DE LA QUESTION 4 !!!!!!
-
-    for(int x=1; x<=10;x++){
-        for(int y=1; y<=10; y++){
-            printf("x=%d ,y =%d, cle= %d\n", x, y, cle(x,y)); 
-        }
-    }
-*/
     return 0;
     
 }

@@ -28,4 +28,8 @@ void afficheChainesSVG(Chaines *C, char* nomInstance);
 double longueurTotale(Chaines *C);
 int comptePointsTotal(Chaines *C);
 
+void liberer_CellPoint(CellPoint* cp);
+void liberer_CellChaine(CellChaine* cc);
+void liberer_Chaines(Chaines *c); 
+
 #endif	
