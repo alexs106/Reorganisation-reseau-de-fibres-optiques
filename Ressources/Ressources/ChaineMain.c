@@ -17,5 +17,4 @@ int main(){
     liberer_Chaines(test_chaine);
     return 0; 
 
-    //CHECK VALGRIND ERRORS
 }

@@ -1,4 +1,6 @@
-all : Chaine.o SVGwriter.o ChaineMain.o 
+all : chaine res hachage
+
+chaine : Chaine.o SVGwriter.o ChaineMain.o 
 	gcc Chaine.o SVGwriter.o ChaineMain.o -o ChaineMain -lm
 
 res : Chaine.o SVGwriter.o Reseau.o main2.o 

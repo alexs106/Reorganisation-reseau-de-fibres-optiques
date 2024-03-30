@@ -29,7 +29,7 @@ typedef struct {
     int gamma;                      /* Nombre maximal de fibres par cable */
     CellNoeud *noeuds;              /* Liste des noeuds du reseau */
     CellCommodite *commodites;      /* Liste des commodites a relier */
-} Reseau;
+} Reseau; 
 
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
 Reseau* reconstitueReseauListe(Chaines *C);

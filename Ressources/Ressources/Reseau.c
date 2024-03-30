@@ -73,16 +73,19 @@ void ajouter_voisin(Noeud* n, Noeud* voisin){
     return;
 }
 
+/*Cette fonction retourne le noeud x et y s'il existe sinon la fonction le construit et l'ajoute dans le reseau*/
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
-    CellNoeud* cn = R->noeuds;
-    while(cn!=NULL){
+    CellNoeud* cn = R->noeuds; //on récupère la liste CellNoeud
+
+    while(cn!=NULL){ //On parcourt cette liste
         Noeud* noe = cn -> nd;
-        if(noe->x == x && noe->y == y){
+        if(noe->x == x && noe->y == y){ //On regarde s'il y a un noeud qui a les mêmes coordonnées x y.
             return noe;
         }
         cn = cn->suiv; 
     }
 
+    //Création du noeud 
     R->nbNoeuds = R->nbNoeuds + 1;
     Noeud* new_noeud = creer_noeud();
     new_noeud->x = x;
@@ -90,10 +93,12 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     new_noeud->num = R->nbNoeuds;
     new_noeud->voisins = NULL;
 
+    //Création de la cellule noeud
     CellNoeud* new_celln = creer_cell_noeud();
     new_celln->nd = new_noeud;
     new_celln->suiv = NULL; 
 
+    //Ajout dans le réseau
     R->noeuds = ajout_noeud(R->noeuds, new_celln);
     return new_noeud; 
     
@@ -150,7 +155,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
     return reseau; 
 }
 
-
+//On compte le nombre de commodites dans le reseau
 int nbCommodites(Reseau *R){
     CellCommodite* cell_com = R->commodites;
     int nb = 0;

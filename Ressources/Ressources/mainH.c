@@ -4,9 +4,14 @@
 #include <stdio.h>
 
 int main(){
+    FILE *f = fopen("00014_burma.cha", "r"); 
+    Chaines * test_chaine = lectureChaines(f);
 
-    TableHachage* t = creation_table_hachage(10);
-    Reseau* R = creer_reseau();
+    Reseau* r = reconstitueReseauHachage(test_chaine,10);
+    FILE *fw = fopen("test_hachage.txt", "w"); 
+    ecrireReseau(r,fw);
+    afficheReseauSVG(r,"hachage"); 
+
 
     /*test pour le noeud 12
     int k = cle(16.53,97.38);
@@ -23,10 +28,15 @@ int main(){
     printf("cle : %d\n",k3);
     printf("indice : %d\n",hachage(k3,t)); //indice 3
     */
-   Noeud * n12 = rechercheCreeNoeudHachage(R,t, 16.53, 97.38);
+   /* Noeud * n12 = rechercheCreeNoeudHachage(R,t, 16.53, 97.38);
+    Noeud * n11 = rechercheCreeNoeudHachage(R,t, 25.23, 97.24);
 
    CellNoeud* c = t->T[6]; 
-   printf("%.2f,%.2f\n",c->nd->x,c->nd->y);
+   while(c != NULL){
+    printf("num= %d x=%.2f,y=%.2f\n",c->nd->num,c->nd->x,c->nd->y);
+    c =c->suiv;
+   }*/
+
 
 
 
