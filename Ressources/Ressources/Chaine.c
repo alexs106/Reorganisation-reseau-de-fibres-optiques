@@ -84,13 +84,13 @@ void ecrireChaines(Chaines *C, FILE *f){
     CellChaine *courant_chaine = C->chaines;
     
     //Pas fini, problème avec nb points donc on fait un buffer
-    //Check compilation S
+    //Check compilation Svalgrind --leak-check=full ./nom_de_votre_programme 
 
 
     while(courant_chaine!=NULL){
 
         CellPoint *chainePoint = courant_chaine->points;
-        int nb_points;
+        int nb_points = 0;
 
         //Ce while calcule le nombre de points de la chaine.
         while(chainePoint != NULL){
@@ -156,7 +156,7 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
 double longueurChaine(CellChaine *c){
     CellPoint* courant = c->points->suiv;
     CellPoint* prec = c->points;
-    double longueur;
+    double longueur = 0.0;
 
     while(courant != NULL){
         longueur += sqrt(pow((courant->x - prec->x),2) + pow((courant->y - prec->y),2));
@@ -169,7 +169,7 @@ double longueurChaine(CellChaine *c){
 double longueurTotale(Chaines *C){
 
     CellChaine* c_chaine = C->chaines;
-    double total;
+    double total =0.0;
     while(c_chaine != NULL){
         total += longueurChaine(c_chaine);
         c_chaine = c_chaine->suiv;

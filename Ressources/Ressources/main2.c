@@ -18,6 +18,12 @@ int main(){
     FILE *fw = fopen("test_res.txt", "w"); 
     ecrireReseau(r2,fw);
     afficheReseauSVG(r2,"reseau"); 
+    /*int nb_l = nbLiaisons(r2); 
+    int nb_c = nbCommodites(r2); 
+    printf("nombre de liaisons : %d\n", nb_l); 
+    printf("nombre de Commodites: %d\n", nb_c);*/ 
+
+
 
     //Libération de mémoire
     liberer_reseau(R);

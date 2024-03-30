@@ -7,7 +7,7 @@ typedef struct{
   int tailleMax;
   CellNoeud** T;
 }TableHachage;
-
+TableHachage* creation_table_hachage(int tailleM);
 int cle(double x,double y); 
 int hachage(int k, TableHachage *h); 
 Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y);

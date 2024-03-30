@@ -5,6 +5,13 @@
 #include "Hachage.h"
 #include <math.h>
 
+TableHachage* creation_table_hachage(int tailleM){
+    TableHachage* t = malloc(sizeof(TableHachage));
+    t->nbElement = 0;
+    t->tailleMax = tailleM;
+    t->T = malloc(sizeof(CellNoeud)*tailleM);
+    return t;
+}
 
 int cle(double x,double y){
     int res = (y+(x+y)*(x+y+1))/2;
