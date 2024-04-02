@@ -12,6 +12,10 @@ int main(){
     ecrireReseau(r,fw);
     afficheReseauSVG(r,"hachage"); 
 
+    //Libération de mémoire
+    liberer_reseau(r);
+    liberer_Chaines(test_chaine);  
+
 
     /*test pour le noeud 12
     int k = cle(16.53,97.38);
@@ -36,11 +40,6 @@ int main(){
     printf("num= %d x=%.2f,y=%.2f\n",c->nd->num,c->nd->x,c->nd->y);
     c =c->suiv;
    }*/
-
-
-
-
-
 
 
 /*

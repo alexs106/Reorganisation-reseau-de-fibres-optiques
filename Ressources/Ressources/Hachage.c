@@ -119,8 +119,15 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
 
         liste = liste->suiv; 
     }
+    liberation_hachage(TH); 
     //on retourne le reseau
     return reseau; 
 }
 
+//Libérer la table de hachage
+void liberation_hachage(TableHachage* TableH){
+    //liberer_CellNoeud(TableH->T);
+    free(TableH->T); 
+    free(TableH); 
+}
 
