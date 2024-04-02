@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "Reseau.h"
 #include "Chaine.h"
-#include "Hachage.h"
 #include "ArbreQuat.h"
+#include <math.h>
 
 /*Fonction qui détermine les coordonnées minimales et maximales 
 des points des chaînes du réseau */
-chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, double* ymax){
+void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, double* ymax){
     CellChaine* chaines = C->chaines;
     CellPoint* points = chaines->points; 
     //On donne les valeurs du premier points au min et max
@@ -102,6 +102,5 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     /*Cas de cellule interne*/
     if ((*a != NULL) && ((*a)->noeud == NULL)){
         //Completer 
-        //J'ai pas encore fait le MAKEFILE
     } 
 } 

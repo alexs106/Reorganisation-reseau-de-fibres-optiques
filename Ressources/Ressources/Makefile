@@ -1,4 +1,4 @@
-all : chaine res hachage
+all : chaine res hachage arbrequat
 
 chaine : Chaine.o SVGwriter.o ChaineMain.o 
 	gcc Chaine.o SVGwriter.o ChaineMain.o -o ChaineMain -lm
@@ -9,6 +9,9 @@ res : Chaine.o SVGwriter.o Reseau.o main2.o
 hachage : Chaine.o SVGwriter.o Reseau.o Hachage.o mainH.o
 	gcc Chaine.o SVGwriter.o Reseau.o Hachage.o mainH.o -o mainH -lm
 
+arbrequat : Chaine.o SVGwriter.o Reseau.o ArbreQuat.o mainAQ.o
+	gcc Chaine.o SVGwriter.o Reseau.o ArbreQuat.o mainAQ.o -o mainAQ -lm
+
 Chaine.o: Chaine.c SVGwriter.h
 	gcc -c Chaine.c -o Chaine.o -lm
 
@@ -18,6 +21,9 @@ Reseau.o: Reseau.c Chaine.h
 Hachage.o: Hachage.c Reseau.h Chaine.h
 	gcc -c Hachage.c -o Hachage.o
 
+ArbreQuat.o: ArbreQuat.c Reseau.h Chaine.h
+	gcc -c ArbreQuat.c -o ArbreQuat.o
+
 ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h 
 	gcc -c ChaineMain.c -o ChaineMain.o -lm
 
@@ -26,6 +32,9 @@ main2.o : main2.c Reseau.h Chaine.h
 
 mainH.o : mainH.c Hachage.h Reseau.h Chaine.h 
 	gcc -c mainH.c -o mainH.o 
+
+mainAQ.o : mainAQ.c ArbreQuat.h Reseau.h Chaine.h
+	gcc -c mainAQ.c -o mainAQ.o
 
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	gcc -c SVGwriter.c -o SVGwriter.o
@@ -39,3 +48,4 @@ clean :
 	rm -f test
 	rm -f main2
 	rm -f mainH 
+	rm -f mainAQ
