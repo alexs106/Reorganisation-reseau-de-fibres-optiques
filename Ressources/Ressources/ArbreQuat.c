@@ -79,28 +79,31 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     }
 
     /*Cas de feuille*/
-    if ((*a)->noeud != NULL){
+    if ((*a)->noeud != NULL){ //CHECK CONDITION
         Noeud *tmp = (*a)->noeud;
 
         (*a)->noeud = NULL; //La feuille devient la cellule interne
 
-        if(tmp->x < (*a)->xc){ //insertion du noeud à l'ouest
-            if(tmp->y < (*a)->yc){ //
-                insererNoeudArbre(tmp, &((*a)->so),*a); //insertion du noeud dans le sous-arbre so
-            }else{
-                insererNoeudArbre(tmp,&((*a)->no),*a); //insertion du noeud dans le sous-arbre no
-            }
-        }else{ //insertion du noeud à l'est 
-            if(tmp->y < (*a)->yc){
-                insererNoeudArbre(tmp, &((*a)->se),*a); //insertion du noeud dans le sous-arbre se
-            }else{
-                insererNoeudArbre(tmp, &((*a)->ne),*a); //insertion du noeud dans le sous-arbre ne
-            }
-        }
+        insererNoeudArbre(n,a,parent);
+        insererNoeudArbre(tmp,a,parent);
     }
 
     /*Cas de cellule interne*/
     if ((*a != NULL) && ((*a)->noeud == NULL)){
         //Completer 
+
+        if(n->x < (*a)->xc){ //insertion du noeud à l'ouest
+            if(n->y < (*a)->yc){ //
+                insererNoeudArbre(n, &((*a)->so),*a); //insertion du noeud dans le sous-arbre so
+            }else{
+                insererNoeudArbre(n,&((*a)->no),*a); //insertion du noeud dans le sous-arbre no
+            }
+        }else{ //insertion du noeud à l'est 
+            if(n->y < (*a)->yc){
+                insererNoeudArbre(n, &((*a)->se),*a); //insertion du noeud dans le sous-arbre se
+            }else{
+                insererNoeudArbre(n, &((*a)->ne),*a); //insertion du noeud dans le sous-arbre ne
+            }
+        }
     } 
 } 
