@@ -1,51 +1,45 @@
+CC = gcc
+CFLAGS = -Wall -g -lm
+
+CHAINE = Chaine.c ChaineMain.c SVGwriter.c 
+OBJS_C = ${CHAINE:.c=.o}
+
+RESEAU = Chaine.c SVGwriter.c Reseau.c main2.c
+OBJS_R = ${RESEAU:.c=.o}
+
+HACHAGE = Chaine.c SVGwriter.c Reseau.c Hachage.c mainH.c
+OBJS_H = ${HACHAGE:.c=.o}
+
+ARBREQ = Chaine.c SVGwriter.c Reseau.c ArbreQuat.c mainAQ.c
+OBJS_A = ${ARBREQ:.c=.o}
+
 all : chaine res hachage arbrequat
 
-chaine : Chaine.o SVGwriter.o ChaineMain.o 
-	gcc Chaine.o SVGwriter.o ChaineMain.o -o ChaineMain -lm
+chaine: ${OBJS_C}
+	${CC} -o chaine ${CFLAGS} ${OBJS_C}
 
-res : Chaine.o SVGwriter.o Reseau.o main2.o 
-	gcc Chaine.o SVGwriter.o Reseau.o main2.o -o main2 -lm
+res: ${OBJS_R}
+	${CC} -o res ${CFLAGS} ${OBJS_R}
 
-hachage : Chaine.o SVGwriter.o Reseau.o Hachage.o mainH.o
-	gcc Chaine.o SVGwriter.o Reseau.o Hachage.o mainH.o -o mainH -lm
+hachage: ${OBJS_H}
+	${CC} -o hachage ${CFLAGS} ${OBJS_H}
 
-arbrequat : Chaine.o SVGwriter.o Reseau.o ArbreQuat.o mainAQ.o
-	gcc Chaine.o SVGwriter.o Reseau.o ArbreQuat.o mainAQ.o -o mainAQ -lm
+arbrequat: ${OBJS_A}
+	${CC} -o arbrequat ${CFLAGS} ${OBJS_A}
 
-Chaine.o: Chaine.c SVGwriter.h
-	gcc -c Chaine.c -o Chaine.o -lm
+.c.o:
+	${CC} -c ${CFLAGS} $<
 
-Reseau.o: Reseau.c Chaine.h
-	gcc -c Reseau.c -o Reseau.o
-
-Hachage.o: Hachage.c Reseau.h Chaine.h
-	gcc -c Hachage.c -o Hachage.o
-
-ArbreQuat.o: ArbreQuat.c Reseau.h Chaine.h
-	gcc -c ArbreQuat.c -o ArbreQuat.o
-
-ChaineMain.o: ChaineMain.c Chaine.h SVGwriter.h 
-	gcc -c ChaineMain.c -o ChaineMain.o -lm
-
-main2.o : main2.c Reseau.h Chaine.h
-	gcc -c main2.c -o main2.o 
-
-mainH.o : mainH.c Hachage.h Reseau.h Chaine.h 
-	gcc -c mainH.c -o mainH.o 
-
-mainAQ.o : mainAQ.c ArbreQuat.h Reseau.h Chaine.h
-	gcc -c mainAQ.c -o mainAQ.o
-
-SVGwriter.o: SVGwriter.c SVGwriter.h
-	gcc -c SVGwriter.c -o SVGwriter.o
 
 clean :
 	rm -f *.o
 	rm -f *.html
-	rm -f main
 	rm -f ChaineMain
-	rm -f Chaine
-	rm -f test
+	rm -f hachage
+	rm -f res
+	rm -f chaine
+	rm -f arbrequat
 	rm -f main2
 	rm -f mainH 
 	rm -f mainAQ
+

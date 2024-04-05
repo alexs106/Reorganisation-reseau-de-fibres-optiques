@@ -88,9 +88,8 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
         insererNoeudArbre(tmp,a,parent);
     }
 
-    /*Cas de cellule interne*/
+    /*Cas de cellule interne*/ 
     if ((*a != NULL) && ((*a)->noeud == NULL)){
-        //Completer 
 
         if(n->x < (*a)->xc){ //insertion du noeud à l'ouest
             if(n->y < (*a)->yc){ //
@@ -108,7 +107,84 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     } 
 } 
 
-//Libération de mémoire de l'arbre quaternaire
+/*Retourne un noeud du réseau correspondant au point dans l'arbre quaternaire
+Si le noeud existe, la fonction retourne le noeud existant
+sinon, on crée le noeud et on l'ajoute dans l'arbre et la liste des noeuds*/
+
+Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, double x, double y){
+    /*Cas de l'arbre vide*/
+    if(*a == NULL){
+    
+        //Création du noeud 
+        R->nbNoeuds = R->nbNoeuds + 1;
+        Noeud* new_noeud = creer_noeud();
+        new_noeud->x = x;
+        new_noeud->y = y;
+        new_noeud->num = R->nbNoeuds;
+
+        //Création du CellNoeud
+        CellNoeud *cn = creer_cell_noeud();
+        cn->nd = new_noeud; 
+        cn->suiv = R->noeuds; //on insère dans le réseau
+
+        R->noeuds = cn;
+        R->nbNoeuds++;
+
+        insererNoeudArbre(new_noeud,a,parent); //on insère dans le tableau
+        return new_noeud;
+    }
+
+    /*Cas de la feuille*/
+    if((*a)->noeud != NULL){
+        //si le noeud qu'on recherche 
+        //correspond à celui de la feuille
+        if((*a)->yc == x && (*a)->xc == y){
+            return (*a)->noeud; 
+        }
+        else{//sinon, on crée le noeud correspondant 
+
+        //Création du noeud 
+        R->nbNoeuds = R->nbNoeuds + 1;
+        Noeud* new_noeud = creer_noeud();
+        new_noeud->x = x;
+        new_noeud->y = y;
+        new_noeud->num = R->nbNoeuds;
+
+        //Création du CellNoeud
+        CellNoeud *cn = creer_cell_noeud();
+        cn->nd = new_noeud; 
+        cn->suiv = R->noeuds; //on insère dans le réseau
+
+        R->noeuds = cn;
+        R->nbNoeuds++;
+
+        insererNoeudArbre(new_noeud,a,parent); //on insère dans le tableau
+        return new_noeud;
+        }
+
+    }
+
+    /*Cas de la cellule interne*/
+    if((*a) != NULL && (*a)->noeud == NULL){
+        if(x<(*a)->xc){ 
+            if(y<(*a)->yc){
+                return rechercheCreeNoeudArbre(R, &(*a)->so, *a, x, y);
+            }else{
+                return rechercheCreeNoeudArbre(R, &(*a)->no, *a, x, y);
+            }
+        }else{
+            if(y<(*a)->yc){
+                return rechercheCreeNoeudArbre(R,&(*a)->se, *a, x, y); 
+            }else{
+                return rechercheCreeNoeudArbre(R,&(*a)->ne, *a, x, y);
+            }
+        }
+    }
+
+    return NULL; 
+}
+
+/*Libération de mémoire de l'arbre quaternaire*/
 void liberer_Arbre_Q(ArbreQuat* a){
     if(a){
         if(a->se){
@@ -125,32 +201,4 @@ void liberer_Arbre_Q(ArbreQuat* a){
         }
     }
     free(a); 
-}
-
-/*Retourne un noeud du réseau correspondant au point dans l'arbre quaternaire
-Si le noeud existe, la fonction retourne le noeud existant
-sinon, on crée le noeud et on l'ajoute dans l'arbre et la liste des noeuds*/
-
-Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, double x, double y){
-    //Cas de l'arbre vide
-    if(*a == NULL){
-    
-        //Création du noeud 
-        R->nbNoeuds = R->nbNoeuds + 1;
-        Noeud* new_noeud = creer_noeud();
-        new_noeud->x = x;
-        new_noeud->y = y;
-        new_noeud->num = R->nbNoeuds;
-
-        //Création du CellNoeud
-        CellNoeud *cn = creer_cell_noeud();
-        cn->nd = new_noeud; 
-        cn->suiv = R->noeuds;
-
-        R->noeuds = cn;
-        R->nbNoeuds++;
-
-        insererNoeudArbre(new_noeud,a,parent);
-        return new_noeud;
-    }
 }

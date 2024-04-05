@@ -5,9 +5,9 @@
 
 int main(){
     Reseau* R = creer_reseau();
-    Noeud* n1 = rechercheCreeNoeudListe(R,1,1);
-    Noeud* n2 = rechercheCreeNoeudListe(R,2,2);
-    Noeud* n3 = rechercheCreeNoeudListe(R,3,1);
+    //Noeud* n1 = rechercheCreeNoeudListe(R,1,1);
+    //Noeud* n2 = rechercheCreeNoeudListe(R,2,2);
+    //Noeud* n3 = rechercheCreeNoeudListe(R,3,1);
     //CellNoeud* c = R->noeuds;
 
     FILE *f = fopen("00014_burma.cha", "r"); 
