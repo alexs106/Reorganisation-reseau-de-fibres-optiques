@@ -107,3 +107,50 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
         }
     } 
 } 
+
+//Libération de mémoire de l'arbre quaternaire
+void liberer_Arbre_Q(ArbreQuat* a){
+    if(a){
+        if(a->se){
+            liberer_Arbre_Q(a->se);
+        }
+         if(a->so){
+            liberer_Arbre_Q(a->so);
+        }
+         if(a->ne){
+            liberer_Arbre_Q(a->ne);
+        }
+         if(a->no){
+            liberer_Arbre_Q(a->no);
+        }
+    }
+    free(a); 
+}
+
+/*Retourne un noeud du réseau correspondant au point dans l'arbre quaternaire
+Si le noeud existe, la fonction retourne le noeud existant
+sinon, on crée le noeud et on l'ajoute dans l'arbre et la liste des noeuds*/
+
+Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, double x, double y){
+    //Cas de l'arbre vide
+    if(*a == NULL){
+    
+        //Création du noeud 
+        R->nbNoeuds = R->nbNoeuds + 1;
+        Noeud* new_noeud = creer_noeud();
+        new_noeud->x = x;
+        new_noeud->y = y;
+        new_noeud->num = R->nbNoeuds;
+
+        //Création du CellNoeud
+        CellNoeud *cn = creer_cell_noeud();
+        cn->nd = new_noeud; 
+        cn->suiv = R->noeuds;
+
+        R->noeuds = cn;
+        R->nbNoeuds++;
+
+        insererNoeudArbre(new_noeud,a,parent);
+        return new_noeud;
+    }
+}
