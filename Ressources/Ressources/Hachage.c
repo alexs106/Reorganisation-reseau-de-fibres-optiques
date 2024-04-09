@@ -70,7 +70,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage*H, double x, double y){
     return new_noeud;
 }
 
-/*Foction qui reconstruit le réseau à partir de la liste de chaînes C avec une table de hachage de taille M*/
+/*Fonction qui reconstruit le réseau à partir de la liste de chaînes C avec une table de hachage de taille M*/
 Reseau* reconstitueReseauHachage(Chaines *C, int M){
     //Création du reseau.
     Reseau* reseau = creer_reseau();
