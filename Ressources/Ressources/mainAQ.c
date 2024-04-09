@@ -13,5 +13,9 @@ int main(){
     FILE *fw = fopen("test_Arbre.txt", "w"); 
     ecrireReseau(r,fw); 
     afficheReseauSVG(r,"arbreq");
+
+    //Libération de mémoire
+    liberer_reseau(r);
+    liberer_Chaines(test_aq);  
     return 0; 
 }
