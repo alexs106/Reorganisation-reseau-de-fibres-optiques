@@ -5,6 +5,7 @@
 #include "ArbreQuat.h"
 #include <math.h>
 
+
 /*Fonction qui détermine les coordonnées minimales et maximales 
 des points des chaînes du réseau */
 void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, double* ymax){
@@ -25,6 +26,7 @@ void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax, dou
             if(points->x > *xmax) *xmax = points->x;
             if(points->y < *ymin) *ymin = points->y;
             if(points->y > *ymax) *ymax = points->y; 
+            points = points->suiv; //modif Noah
         }
         chaines = chaines->suiv;
     }
@@ -50,7 +52,9 @@ ArbreQuat* creerArbreQuat(double xc, double yc, double coteX, double coteY){
 void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     
     /*Cas de l'arbre vide*/
+    printf("Je passe ici 1\n");
     if(*a == NULL){
+        printf("Je passe ici 2\n");
         double xc;
         double yc;
         
@@ -76,6 +80,7 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
         *a = creerArbreQuat(xc,yc,parent->coteX/2,parent->coteY/2);
 
         (*a)->noeud = n; 
+        return ; //Il faut sortir du programme après la création 
     }
 
     /*Cas de feuille*/
@@ -91,7 +96,7 @@ void insererNoeudArbre(Noeud* n, ArbreQuat** a, ArbreQuat* parent){
     /*Cas de cellule interne*/ 
     if ((*a != NULL) && ((*a)->noeud == NULL)){
 
-        if(n->x < (*a)->xc){ //insertion du noeud à l'ouest
+        if(n->x < (*a)->xc){ //insertion du noeud à l'ouest*/
             if(n->y < (*a)->yc){ //
                 insererNoeudArbre(n, &((*a)->so),*a); //insertion du noeud dans le sous-arbre so
             }else{
