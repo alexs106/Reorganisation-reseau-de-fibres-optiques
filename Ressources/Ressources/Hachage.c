@@ -78,7 +78,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
     //Création de la table de hachage de taille M.
     TableHachage* TH = creation_table_hachage(M);
 
-    //On recupère les chaines de la Chaine C
+    //On recupère les chaines de la Chaine 
     CellChaine* liste = C->chaines;
 
     //On parcourt toutes les chaines
