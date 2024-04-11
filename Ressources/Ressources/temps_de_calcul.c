@@ -10,6 +10,7 @@ Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax,int yma
     Chaines* chaine = malloc(sizeof(Chaines));
     chaine->nbChaines = nbChaines;
     chaine->gamma = 3;
+    
     srand(time(NULL));
     CellChaine* tete_lc;
     int i = 0;
@@ -53,10 +54,14 @@ Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax,int yma
 
 
 int main(int argc,char** argv){
+    /*TEST DE LA QUESTION 6.2
     FILE *f2 = fopen("temps_de_calcul_alea.txt", "w");
     Chaines* c = generationAleatoire(10,5,5,5);
-    ecrireChaines(c,f2);
-    /*char* nom_fichier = argv[1];
+    ecrireChaines(c,f2);*/
+
+
+    /*TEST DE LA QUESTION 6.1
+    char* nom_fichier = argv[1];
     FILE *f = fopen(nom_fichier, "r");
     if (f==NULL){
 		printf("Erreur lors de l'ouverture du fichier \n");
