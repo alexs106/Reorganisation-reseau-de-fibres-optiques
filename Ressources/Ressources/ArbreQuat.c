@@ -125,8 +125,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
     
     //Cas de l'arbre vide
     if(!*a){
-        printf("Je passe iciarbre vide\n");
-       
         //Création du noeud 
         R->nbNoeuds = R->nbNoeuds + 1;
         Noeud* n = creer_noeud();

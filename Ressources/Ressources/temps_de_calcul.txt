@@ -1,0 +1,4 @@
+Temps de calcul pour le fichier 00014_burma.cha
+Liste chainée : 0.000016 secondes
+Table de Hachage de taille 10 : 0.000019 secondes
+Arbre quaternaire : 0.000028 secondes
