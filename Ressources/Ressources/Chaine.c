@@ -109,7 +109,7 @@ void ecrireChaines(Chaines *C, FILE *f){
         fprintf(f,"\n");
         courant_chaine = courant_chaine->suiv;
     }
-    fclose(f);
+    //fclose(f);
 
 }
 

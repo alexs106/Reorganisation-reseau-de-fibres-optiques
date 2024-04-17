@@ -109,5 +109,57 @@ int main(int argc,char** argv){
     fprintf(fw,"Table de Hachage de taille %d : %lf secondes\n",M,temps_h);
     fprintf(fw,"Arbre quaternaire : %lf secondes\n",temps_a);
     fclose(f);*/
+
+    double temps_lc = 0;
+    double temps_lc_debut;
+    double temps_lc_fin;
+
+    double temps_h = 0;
+    double temps_h_debut;
+    double temps_h_fin;
+
+    double temps_a = 0;
+    double temps_a_debut;
+    double temps_a_fin; 
+
+    FILE *f2 = fopen("temps_calcul_lc.txt", "w");
+    FILE *f3 = fopen("temps_calcul_ha.txt","w"); 
+    //Taille de hachage : 10, 50, 100, 500, 1000
+
+    for(int nbChaines=500; nbChaines<5000; nbChaines+=500){
+        //int nbChaines, int nbPointsChaine, int xmax,int ymax
+        Chaines* chaine = generationAleatoire(nbChaines,100,5000,5000);
+        int M = 10;  
+
+        //ecrireChaines(chaine,f2);
+
+        temps_lc_debut = clock();
+        reconstitueReseauListe(chaine);
+        temps_lc_fin = clock();
+
+        temps_h_debut = clock();
+        reconstitueReseauHachage(chaine,M);
+        temps_h_fin = clock();
+
+        temps_a_debut = clock();
+        reconstitueReseauArbre(chaine);
+        temps_a_fin = clock(); 
+
+        temps_lc = ((double)(temps_lc_fin-temps_lc_debut))/CLOCKS_PER_SEC;
+	    temps_h = ((double)(temps_h_fin-temps_h_debut))/CLOCKS_PER_SEC;
+        temps_a = ((double)(temps_a_fin-temps_a_debut))/CLOCKS_PER_SEC;
+
+        //fprintf(f2,"Temps de calcul pour le fichier %s\n","test_graphe.txt");
+        fprintf(f2,"%d %lf\n",nbChaines, temps_lc);
+        fprintf(f3,"%d %lf %lf\n",nbChaines, temps_h, temps_a);
+
+        printf("%d\n", nbChaines); 
+        //liberer_Chaines(chaine);
+    }
+
+    fclose(f2);
+    fclose(f3); 
+    
     return 0;
 }
+
