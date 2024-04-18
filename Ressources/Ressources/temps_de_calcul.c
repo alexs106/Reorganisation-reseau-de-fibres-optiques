@@ -126,7 +126,7 @@ int main(int argc,char** argv){
     FILE *f3 = fopen("temps_calcul_ha.txt","w"); 
     //Taille de hachage : 10, 50, 100, 500, 1000
 
-    for(int nbChaines=500; nbChaines<5000; nbChaines+=500){
+    for(int nbChaines=500; nbChaines<=5000; nbChaines+=500){
         //int nbChaines, int nbPointsChaine, int xmax,int ymax
         Chaines* chaine = generationAleatoire(nbChaines,100,5000,5000);
         int M = 10;  
