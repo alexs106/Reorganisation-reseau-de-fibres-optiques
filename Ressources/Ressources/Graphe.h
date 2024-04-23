@@ -1,4 +1,4 @@
-
+cod
 # ifndef __GRAPHE_H__
 # define __GRAPHE_H__
 
@@ -32,12 +32,12 @@ typedef struct {
 typedef struct{
     int nbsom ;
     /* Nombre de sommets */
-    Sommet ** T_som ;
+    Sommet** T_som ;
     /* Tableau de pointeurs sur sommets */
     int gamma ;
     int nbcommod ;
     /* Nombre de commodites */
-    Commod * T_commod ; /* Tableau des commodites */
+    Commod** T_commod ; /* Tableau des commodites */
 }Graphe;
 
 # endif
