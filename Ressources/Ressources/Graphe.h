@@ -33,9 +33,11 @@ typedef struct{
     Sommet** T_som ; /* Tableau de pointeurs sur sommets */
     int gamma ;
     int nbcommod; /* Nombre de commodites */
-    Commod** T_commod ; /* Tableau des commodites */
+    Commod* T_commod ; /* Tableau des commodites */
 }Graphe;
 
 Graphe* creerGraphe(Reseau* r);
+Sommet* creer_sommet(int num,double x,double y); 
+Arete* creer_arete(int u, int v); 
 
 # endif

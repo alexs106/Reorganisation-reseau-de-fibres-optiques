@@ -141,7 +141,7 @@ int main(int argc,char** argv){
     FILE *f2 = fopen("temps_calcul_lc_2.txt", "w");
     FILE *f3 = fopen("temps_calcul_ha_2.txt","w"); 
 
-    for(int nbChaines=2000; nbChaines<=3500; nbChaines+=500){
+    for(int nbChaines=500; nbChaines<=5000; nbChaines+=500){
         //1500 premier tour
         //int nbChaines, int nbPointsChaine, int xmax,int ymax
         Chaines* chaine = generationAleatoire(nbChaines,100,5000,5000);
