@@ -19,6 +19,9 @@ OBJS_RTR = ${RTR:.c=.o}
 TDC = Chaine.c SVGwriter.c Reseau.c ArbreQuat.c  Hachage.c temps_de_calcul.c
 OBJS_TDC = ${TDC:.c=.o}
 
+GRAPHE = Graphe.c SVGwriter.c Reseau.c Chaine.c mainG.c
+OBJS_G = ${GRAPHE:.c=.o}
+
 all : chaine res hachage arbrequat
 
 chaine: ${OBJS_C}
@@ -39,6 +42,10 @@ ReconstitueReseau: ${OBJS_RTR}
 temps_de_calcul: ${TDC:.c=.o}
 	${CC} -o temps_de_calcul ${CFLAGS} ${OBJS_TDC}
 
+graphe: ${GRAPHE:.c=.o}
+	${CC} -o graphe ${CFLAGS} ${OBJS_G}
+
+
 .c.o:
 	${CC} -c ${CFLAGS} $<
 
@@ -56,4 +63,5 @@ clean :
 	rm -f mainAQ
 	rm -f ReconstitueReseau
 	rm -f temps_de_calcul
+	rm -f graphe 
 

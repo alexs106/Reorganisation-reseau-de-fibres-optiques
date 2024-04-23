@@ -1,10 +1,9 @@
-cod
-# ifndef __GRAPHE_H__
-# define __GRAPHE_H__
-
+#ifndef __GRAPHE_H__
+#define __GRAPHE_H__
 #include <stdlib.h>
-# include <stdio.h>
-# include "Struct_Liste.h"
+#include <stdio.h>
+#include "Struct_File.h"
+#include "Reseau.h"
 
 
 typedef struct{
@@ -30,14 +29,13 @@ typedef struct {
 }Commod ;
 
 typedef struct{
-    int nbsom ;
-    /* Nombre de sommets */
-    Sommet** T_som ;
-    /* Tableau de pointeurs sur sommets */
+    int nbsom ; /* Nombre de sommets */
+    Sommet** T_som ; /* Tableau de pointeurs sur sommets */
     int gamma ;
-    int nbcommod ;
-    /* Nombre de commodites */
+    int nbcommod; /* Nombre de commodites */
     Commod** T_commod ; /* Tableau des commodites */
 }Graphe;
+
+Graphe* creerGraphe(Reseau* r);
 
 # endif
