@@ -1,5 +1,6 @@
 #include "Graphe.h"
 #include "Reseau.h"
+#include "Chaine.h"
 
 Sommet* creer_sommet(int num,double x,double y){
     Sommet* s = (Sommet*) malloc(sizeof(Sommet));
@@ -74,27 +75,84 @@ Graphe* creerGraphe(Reseau* r){
     }
     return g;
 }
-    /*
-    //Création du tableau de pointeurs sur sommets
-    int nb_noeuds = r->nbNoeuds;
-    Sommet** Tab_som = malloc(sizeof(Sommet)*nb_noeuds);
 
-    CellNoeud* lc_noeuds = r->noeuds;*/
-/*
-    while(lc_noeuds != NULL && i<nb_noeuds){
-        Tab_som[i]->num = lc_noeuds->nd->num;
-        Tab_som[i]->x = lc_noeuds->nd->x;
-        Tab_som[i]->y = lc_noeuds->nd->y;
+/*Fonction qui calcule le plus petit nombre d'arêtes d'une */
+int plus_petit_nb_aretes(Graphe* g, int u, int v){
+    if(u==v){
+        return 0; //chemin null
+    }
 
+    int *distance = malloc(sizeof(int) * (g->nbsom));
+    int *visite = (int*)malloc(sizeof(int)*(g->nbsom)); 
 
-        CellNoeud* lc_voisin_res = lc_noeuds->nd->voisins;
-        while(lc_voisin_res!=NULL){
-            Cellule_arete* lc_voisin = malloc(sizeof(Cellule_arete));
-            lc_voisin->a->u = lc_noeuds->nd->num;
-            lc_voisin->a->v = lc_voisin_res->num;
+    for(int i = 0; i<g->nbsom; i++){
+        visite[i] = 0;
+        distance[i] = 0;
+    }
+    
+    visite[u] = 1;
+    S_file *f = (S_file*) malloc(sizeof(S_file));
+    
+    Init_file(f);
+    enfile(f,u);
+    while(! (estFileVide(f))){
+        int val = defile(f);
+        Cellule_arete *val_courante = g->T_som[u] -> L_voisin;
+        while(val_courante){
+            int d;
+            if(val_courante->a->u == val){
+                d = val_courante->a->v;
+            }else{
+                d = val_courante->a->u;
+            }
+            if(visite[d]==0){
+                visite[d] = 1;
+                distance[d] = distance[val]+1;
+                enfile(f,d); 
+            }
+            val_courante = val_courante->suiv;
         }
+    }
+    int res = distance[v];
+    free(visite);
+    free(f);
+    free(distance);
+    return res; 
+}
 
+/*Fonction qui libère les sommets d'une Table de Sommets*/
+void liberer_sommets(Sommet **T_som, int nbsom){
+    for(int i = 0; i<nbsom; i++){
+        if(T_som[i]!=NULL){
+            while(T_som[i]->L_voisin){
+                Cellule_arete *ca = T_som[i]->L_voisin->suiv;
+                liberer_arete(T_som[i]->L_voisin);
+                T_som[i]->L_voisin=ca;
+            }
+            free(T_som[i]);
+            T_som[i]=NULL;
+        }
+    }
+    free(T_som); 
+}
 
-    }  
+/*Fonction qui libère les arêtes d'une cellule d'arêtes*/
+void liberer_arete(Cellule_arete *ca){
+    if(ca == NULL){
+        return 0;
+    }
+    if(ca->a->u == -1 && ca->a->v == -1){
+        free(ca->a);
+    }else{
+        ca->a->u = -1;
+        ca->a->v = -1;
+    }
+    free(ca);
+}
 
-    */
+/*Fonction qui libère le graphe*/
+void liberer_graphe(Graphe *g){
+    liberer_sommet(g->T_som,g->nbsom);
+    free(g->T_commod);
+    free(g); 
+}
