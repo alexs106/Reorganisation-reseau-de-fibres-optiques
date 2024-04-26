@@ -64,6 +64,7 @@ Graphe* creerGraphe(Reseau* r){
                 Arete* arete = creer_arete(noeud->num,noeudvoisin->num); 
                // printf("creation de l'arête entre %d et %d\n",arete->u,arete->v);
 
+                //On rajoute dans la liste voisin du sommet u l'arête {u,v}
                 Cellule_arete* lc_arete = malloc(sizeof(Cellule_arete));
                 lc_arete->a = arete;
 
@@ -75,7 +76,23 @@ Graphe* creerGraphe(Reseau* r){
                     lc_arete->suiv = g->T_som[(arete->u)-1]->L_voisin;
                     g->T_som[(arete->u)-1]->L_voisin = lc_arete;
                 }
-                /*lc_aretCellule_arete* voisin = g->T_som[1]->L_voisin;e->a = arete; 
+
+                //On rajoute dans la liste voisin du sommet v l'arête {u,v}
+                Cellule_arete* lc_arete_v = malloc(sizeof(Cellule_arete));
+                 lc_arete_v->a = arete;
+            
+                if(g->T_som[(arete->v)-1]->L_voisin == NULL){
+                    lc_arete_v->suiv = NULL;
+                    g->T_som[(arete->v)-1]->L_voisin = lc_arete_v;
+                }
+                else{
+                    lc_arete_v->suiv = g->T_som[(arete->v)-1]->L_voisin;
+                    g->T_som[(arete->v)-1]->L_voisin = lc_arete_v;
+                }
+                
+                /*
+
+                lc_aretCellule_arete* voisin = g->T_som[1]->L_voisin;e->a = arete; 
 
                 lc_arete->suiv = g->T_som[(arete->u)-1]->L_voisin;
                 g->T_som[(noeud->num)-1]->L_voisin = lc_arete->suiv;*/
@@ -175,7 +192,6 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
 
     while(!(estFileVide(f))){
         int val = defile(f);
-
         if(val == v){
             liberer_file(f); 
             return chemin[v-1]; 
@@ -194,6 +210,7 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
                 enfile(f,voisin);
                 chemin[voisin-1] = chemin[val -1] +1; 
             }
+    
             courante = courante->suiv; 
         }
 
