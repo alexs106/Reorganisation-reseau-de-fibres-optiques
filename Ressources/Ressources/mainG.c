@@ -9,20 +9,25 @@ int main(){
 
     Reseau* r = reconstitueReseauListe(test); 
     Graphe* g = creerGraphe(r);
-/*
-    int s = g->T_som[0]->num;
-    double x = g->T_som[0]->x;
-    double y = g->T_som[0]->y;
-    printf("sommet : %d x=%.2f et y=%.2f\n",s,x,y);
-    Cellule_arete* voisin = g->T_som[0]->L_voisin;
-    if(voisin==NULL){
-        printf("la liste des voisins est null\n");
-    }
-    while(voisin!=NULL){
-        printf("arrete u=%d et v=%d\n",voisin->a->u,voisin->a->v);
-        voisin = voisin->suiv;
-    }
-    */
 
+//TEST DE LA QUESTION 7.1
+    int i=0;
+    while(i<g->nbsom-1){
+        int s = g->T_som[i]->num;
+        double x = g->T_som[i]->x;
+        double y = g->T_som[i]->y;
+        printf("sommet : %d x=%.2f et y=%.2f\n",s,x,y);
+        Cellule_arete* voisin = g->T_som[i]->L_voisin;
+        while(voisin){
+            printf("arrete entre u=%d et v=%d\n",voisin->a->u,voisin->a->v);
+            voisin = voisin->suiv;
+        }
+        i++;
+    }
+
+    int u = 1;
+    int v = 8;
+    int chemin = plus_petit_nb_aretes(g,u,v);
+    printf("la lg du plus petit chemin entre %d et %d est %d\n",u,v,chemin);
     return 0;
 }

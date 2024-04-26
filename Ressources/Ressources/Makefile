@@ -19,7 +19,7 @@ OBJS_RTR = ${RTR:.c=.o}
 TDC = Chaine.c SVGwriter.c Reseau.c ArbreQuat.c  Hachage.c temps_de_calcul.c
 OBJS_TDC = ${TDC:.c=.o}
 
-GRAPHE = Graphe.c SVGwriter.c Reseau.c Chaine.c mainG.c
+GRAPHE = Graphe.c SVGwriter.c Reseau.c Chaine.c mainG.c Struct_File.c
 OBJS_G = ${GRAPHE:.c=.o}
 
 all : chaine res hachage arbrequat

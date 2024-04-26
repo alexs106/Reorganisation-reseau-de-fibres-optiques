@@ -1,6 +1,7 @@
 #include "Graphe.h"
 #include "Reseau.h"
 #include "Chaine.h"
+#include "Struct_File.h"
 
 Sommet* creer_sommet(int num,double x,double y){
     Sommet* s = (Sommet*) malloc(sizeof(Sommet));
@@ -54,18 +55,30 @@ Graphe* creerGraphe(Reseau* r){
     while(lc_noeuds != NULL){
         Noeud* noeud = lc_noeuds->nd;
         CellNoeud* lc_noeudsvoisin = noeud->voisins;
-
+        //printf("noeud %d\n",noeud->num);
         while(lc_noeudsvoisin != NULL){
             Noeud* noeudvoisin = lc_noeudsvoisin->nd;
+            //printf("noeudvoisin : %d\n",noeudvoisin->num);
             if(noeud->num < noeudvoisin->num){
                 //Créer arrête
                 Arete* arete = creer_arete(noeud->num,noeudvoisin->num); 
+               // printf("creation de l'arête entre %d et %d\n",arete->u,arete->v);
 
                 Cellule_arete* lc_arete = malloc(sizeof(Cellule_arete));
-                lc_arete->a = arete; 
+                lc_arete->a = arete;
+
+                if(g->T_som[(arete->u)-1]->L_voisin == NULL){
+                    lc_arete->suiv = NULL;
+                    g->T_som[(arete->u)-1]->L_voisin = lc_arete;
+                }
+                else{
+                    lc_arete->suiv = g->T_som[(arete->u)-1]->L_voisin;
+                    g->T_som[(arete->u)-1]->L_voisin = lc_arete;
+                }
+                /*lc_aretCellule_arete* voisin = g->T_som[1]->L_voisin;e->a = arete; 
 
                 lc_arete->suiv = g->T_som[(arete->u)-1]->L_voisin;
-                g->T_som[(noeud->num)-1]->L_voisin = lc_arete->suiv; 
+                g->T_som[(noeud->num)-1]->L_voisin = lc_arete->suiv;*/
                 
             }
             lc_noeudsvoisin = lc_noeudsvoisin->suiv;
@@ -78,8 +91,8 @@ Graphe* creerGraphe(Reseau* r){
 
 
 
-/*Fonction qui calcule le plus petit nombre d'arêtes d'une chaine entre deux sommets u et v d'un graphe. 
-int plus_petit_nb_aretes(Graphe* g, int u, int v){
+/*Fonction qui calcule le plus petit nombre d'arêtes d'une chaine entre deux sommets u et v d'un graphe. */
+/*int plus_petit_nb_aretes(Graphe* g, int u, int v){
     if(u==v){
         return 0; //chemin null
     }
@@ -88,10 +101,10 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
     int *visite = (int*)malloc(sizeof(int)*(g->nbsom)); 
 
     for(int i = 0; i<g->nbsom; i++){
-        visite[i] = 0;
+        visite[i] = -1;
         distance[i] = 0;
     }
-    https://moodle-sciences-22.sorbonne-universite.fr/course/view.php?id=3729
+
     visite[u] = 1;
     S_file *f = (S_file*) malloc(sizeof(S_file));
     
@@ -99,7 +112,24 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
     enfile(f,u);
     while(! (estFileVide(f))){
         int val = defile(f);
-        Cellule_arete *val_courante = g->T_som[u] -> L_voisin;
+
+        Cellule_arete *courante= g->T_som[u]->L_voisin;
+        
+        while(courante!=NULL){
+            int p = courante->a->v;
+            if(visite[p] == 0){
+                visite[p] = 1;
+                enfile(f,p);
+            }
+            courante = courante->suiv;
+        }
+        while(val_courante){
+            int v = val_courante->a->v;
+            printf("v = %d\n",v);
+            val_courante = val_courante->suiv;
+        } resultat de la boucle pour u=1 on 2,10 et 6*/ 
+        //return 0;
+        /*
         while(val_courante){
             int d;
             if(val_courante->a->u == val){
@@ -114,15 +144,73 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
             }
             val_courante = val_courante->suiv;
         }
+        */
+/*
     }
     int res = distance[v];
     free(visite);
     free(f);
-    free(distance);
+    //free(distance);
     return res; 
 }
+
 */
-/*Fonction qui libère les sommets d'une Table de Sommets
+
+int plus_petit_nb_aretes(Graphe* g, int u, int v){
+    int *chemin = malloc((g->nbsom)*sizeof(int));
+
+    int *visite = (int*)malloc(sizeof(int)*(g->nbsom)); 
+
+    for(int i = 0; i<g->nbsom; i++){
+        visite[i] = 0;
+        chemin[i] = 0;
+    }
+
+    visite[u-1] = 1;
+    chemin[u-1] = 0; 
+    S_file *f = (S_file*) malloc(sizeof(S_file));
+    
+    Init_file(f);
+    enfile(f,u);
+
+    while(!(estFileVide(f))){
+        int val = defile(f);
+
+        if(val == v){
+            liberer_file(f); 
+            return chemin[v-1]; 
+        }
+
+        Cellule_arete *courante = g->T_som[val-1]->L_voisin;
+        while(courante!=NULL){
+            int voisin; 
+            if(val == courante->a->u){
+                voisin = courante->a->v;
+            }else{
+                voisin = courante->a->u; 
+            }
+            if(visite[voisin-1] == 0){
+                visite[voisin-1] = 1;
+                enfile(f,voisin);
+                chemin[voisin-1] = chemin[val -1] +1; 
+            }
+            courante = courante->suiv; 
+        }
+
+    }
+    liberer_file(f); 
+    return -1; //Pas de chemin
+}
+
+/*Fonction qui libère la file*/
+void liberer_file(S_file *f){
+    while(!estFileVide(f)){
+        defile(f);
+    }
+    free(f); 
+}
+
+/*Fonction qui libère les sommets d'une Table de Sommets*/
 void liberer_sommets(Sommet **T_som, int nbsom){
     for(int i = 0; i<nbsom; i++){
         if(T_som[i]!=NULL){
@@ -137,11 +225,11 @@ void liberer_sommets(Sommet **T_som, int nbsom){
     }
     free(T_som); 
 }
-*/
-/*Fonction qui libère les arêtes d'une cellule d'arêtes
+
+/*Fonction qui libère les arêtes d'une cellule d'arêtes*/
 void liberer_arete(Cellule_arete *ca){
     if(ca == NULL){
-        return 0;
+        return;
     }
     if(ca->a->u == -1 && ca->a->v == -1){
         free(ca->a);
@@ -151,12 +239,10 @@ void liberer_arete(Cellule_arete *ca){
     }
     free(ca);
 }
-*/
 
-/*Fonction qui libère le graphe
+/*Fonction qui libère le graphe*/
 void liberer_graphe(Graphe *g){
-    liberer_sommet(g->T_som,g->nbsom);
+    liberer_sommets(g->T_som,g->nbsom);
     free(g->T_commod);
     free(g); 
 }
-*/

@@ -40,6 +40,7 @@ Graphe* creerGraphe(Reseau* r);
 Sommet* creer_sommet(int num,double x,double y); 
 Arete* creer_arete(int u, int v); 
 int plus_petit_nb_aretes(Graphe* g, int u, int v);
+void liberer_file(S_file *f); 
 void liberer_sommets(Sommet **T_som, int nbsom);
 void liberer_arete(Cellule_arete *ca);
 void liberer_graphe(Graphe *g);

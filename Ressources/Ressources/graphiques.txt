@@ -1,0 +1,4 @@
+plot "temps_calcul_lc.txt" using 1:2 title "Temps LC"
+set term postscript portrait 
+set output "graphique_temps_calcul_lc.ps"
+set size 0.7, 0.7
