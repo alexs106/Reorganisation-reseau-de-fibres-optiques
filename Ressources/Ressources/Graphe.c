@@ -76,7 +76,9 @@ Graphe* creerGraphe(Reseau* r){
     return g;
 }
 
-/*Fonction qui calcule le plus petit nombre d'arêtes d'une */
+
+
+/*Fonction qui calcule le plus petit nombre d'arêtes d'une chaine entre deux sommets u et v d'un graphe. 
 int plus_petit_nb_aretes(Graphe* g, int u, int v){
     if(u==v){
         return 0; //chemin null
@@ -89,7 +91,7 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
         visite[i] = 0;
         distance[i] = 0;
     }
-    
+    https://moodle-sciences-22.sorbonne-universite.fr/course/view.php?id=3729
     visite[u] = 1;
     S_file *f = (S_file*) malloc(sizeof(S_file));
     
@@ -119,8 +121,8 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
     free(distance);
     return res; 
 }
-
-/*Fonction qui libère les sommets d'une Table de Sommets*/
+*/
+/*Fonction qui libère les sommets d'une Table de Sommets
 void liberer_sommets(Sommet **T_som, int nbsom){
     for(int i = 0; i<nbsom; i++){
         if(T_som[i]!=NULL){
@@ -135,8 +137,8 @@ void liberer_sommets(Sommet **T_som, int nbsom){
     }
     free(T_som); 
 }
-
-/*Fonction qui libère les arêtes d'une cellule d'arêtes*/
+*/
+/*Fonction qui libère les arêtes d'une cellule d'arêtes
 void liberer_arete(Cellule_arete *ca){
     if(ca == NULL){
         return 0;
@@ -149,10 +151,12 @@ void liberer_arete(Cellule_arete *ca){
     }
     free(ca);
 }
+*/
 
-/*Fonction qui libère le graphe*/
+/*Fonction qui libère le graphe
 void liberer_graphe(Graphe *g){
     liberer_sommet(g->T_som,g->nbsom);
     free(g->T_commod);
     free(g); 
 }
+*/
