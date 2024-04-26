@@ -109,70 +109,6 @@ Graphe* creerGraphe(Reseau* r){
 
 
 /*Fonction qui calcule le plus petit nombre d'arêtes d'une chaine entre deux sommets u et v d'un graphe. */
-/*int plus_petit_nb_aretes(Graphe* g, int u, int v){
-    if(u==v){
-        return 0; //chemin null
-    }
-
-    int *distance = malloc(sizeof(int) * (g->nbsom));
-    int *visite = (int*)malloc(sizeof(int)*(g->nbsom)); 
-
-    for(int i = 0; i<g->nbsom; i++){
-        visite[i] = -1;
-        distance[i] = 0;
-    }
-
-    visite[u] = 1;
-    S_file *f = (S_file*) malloc(sizeof(S_file));
-    
-    Init_file(f);
-    enfile(f,u);
-    while(! (estFileVide(f))){
-        int val = defile(f);
-
-        Cellule_arete *courante= g->T_som[u]->L_voisin;
-        
-        while(courante!=NULL){
-            int p = courante->a->v;
-            if(visite[p] == 0){
-                visite[p] = 1;
-                enfile(f,p);
-            }
-            courante = courante->suiv;
-        }
-        while(val_courante){
-            int v = val_courante->a->v;
-            printf("v = %d\n",v);
-            val_courante = val_courante->suiv;
-        } resultat de la boucle pour u=1 on 2,10 et 6*/ 
-        //return 0;
-        /*
-        while(val_courante){
-            int d;
-            if(val_courante->a->u == val){
-                d = val_courante->a->v;
-            }else{
-                d = val_courante->a->u;
-            }
-            if(visite[d]==0){
-                visite[d] = 1;
-                distance[d] = distance[val]+1;
-                enfile(f,d); 
-            }
-            val_courante = val_courante->suiv;
-        }
-        */
-/*
-    }
-    int res = distance[v];
-    free(visite);
-    free(f);
-    //free(distance);
-    return res; 
-}
-
-*/
-
 int plus_petit_nb_aretes(Graphe* g, int u, int v){
     int *chemin = malloc((g->nbsom)*sizeof(int));
 
@@ -199,7 +135,7 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
 
         Cellule_arete *courante = g->T_som[val-1]->L_voisin;
         while(courante!=NULL){
-            int voisin; 
+            int voisin;
             if(val == courante->a->u){
                 voisin = courante->a->v;
             }else{
@@ -218,6 +154,164 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
     liberer_file(f); 
     return -1; //Pas de chemin
 }
+
+
+Cell_entier* creer_liste_entiers(){
+    Cell_entier *L = malloc(sizeof(Cell_entier)); 
+    return L; 
+}
+
+Cell_entier* ajout_en_tete(Cell_entier *L, int n){
+    Cell_entier *nouveau = (Cell_entier*)malloc(sizeof(Cell_entier)); 
+    nouveau->num = n;
+    nouveau->suiv = L;
+    return nouveau; 
+}
+
+
+/*Fonction qui stocke l'arborescence des chemins entre u et v*/
+Cell_entier* arborescence_chemins(Graphe* g, int u, int v){
+    int *chemin = malloc((g->nbsom)*sizeof(int));
+    int *visite = (int*)malloc(sizeof(int)*(g->nbsom)); 
+    int *predecesseur = (int*)malloc(sizeof(int)*(g->nbsom)); 
+
+    for(int i = 0; i<g->nbsom; i++){
+        visite[i] = 0;
+        chemin[i] = 0;
+        predecesseur[i] = 0; 
+    }
+
+    visite[u-1] = 1;
+    chemin[u-1] = 0; 
+    S_file *f = (S_file*) malloc(sizeof(S_file));
+    
+    Init_file(f);
+    enfile(f,u);
+
+    while(!(estFileVide(f))){
+        int val = defile(f);
+
+        Cellule_arete *courante = g->T_som[val-1]->L_voisin;
+        while(courante!=NULL){
+            int voisin; 
+            if(val == courante->a->u){
+                voisin = courante->a->v;
+            }else{
+                voisin = courante->a->u; 
+            }
+            if(visite[voisin-1] == 0){
+                visite[voisin-1] = 1;
+                enfile(f,voisin);
+                chemin[voisin-1] = chemin[val -1] +1; 
+                predecesseur[voisin-1] = val;
+            }
+    
+            courante = courante->suiv; 
+        }
+
+    }
+    int tmp = v;
+    Cell_entier *L = NULL;
+
+    while(tmp != u){
+        L = ajout_en_tete(L,tmp);
+        printf("ajout de tmp=%d à la liste\n",tmp);
+        tmp = predecesseur[tmp-1]; 
+    }
+    L = ajout_en_tete(L,u);
+    liberer_file(f);
+    return L; 
+}
+/*Cette fonction -crée le graphe correspondant au réseau.
+                 -calcule la plus courte chaı̂ne pour chaque commodite.
+                 -et qui retourne vrai si pour toute arête du graphe, le nombre de chaı̂nes qui passe par cette
+                 arête est inférieur à γ, et faux sinon. On créera une matrice permettant de compter le nombre
+                 de chaı̂nes passant par chaque arête {u, v}.*/
+LC_commo* ajout_en_tete_commo(LC_commo *L, Cell_entier* Chaine,Commod com,int numéro){
+    LC_commo *nouveau = (LC_commo*)malloc(sizeof(LC_commo)); 
+    nouveau->num = numéro;
+    nouveau->c = com;
+    nouveau->chaine = Chaine;
+    nouveau->suiv = L;
+    return nouveau; 
+}
+
+int reorganiseReseau(Reseau* r){
+    Graphe* g = creerGraphe(r);
+    Commod* Tab_commodites = g->T_commod;
+    int nb_commodites = g->nbcommod;
+    
+    LC_commo *lc_commo = NULL; 
+    
+    for(int i=0; i<nb_commodites;i++){
+        Commod c = Tab_commodites[i];
+        Cell_entier* chaine = arborescence_chemins(g,c.e1, c.e2); 
+        lc_commo = ajout_en_tete_commo(lc_commo,chaine,c,i);
+    }
+
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*Fonction qui libère la file*/
 void liberer_file(S_file *f){

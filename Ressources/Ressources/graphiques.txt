@@ -1,4 +1,4 @@
-plot "temps_calcul_lc.txt" using 1:2 title "Temps LC"
+plot "temps_calcul_ha.txt" using 1:7 title "Arbre quaternaire" with lines lc rgb "red"
 set term postscript portrait 
 set output "graphique_temps_calcul_lc.ps"
 set size 0.7, 0.7

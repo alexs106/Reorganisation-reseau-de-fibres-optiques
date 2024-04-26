@@ -36,10 +36,31 @@ typedef struct{
     Commod* T_commod ; /* Tableau des commodites */
 }Graphe;
 
+typedef struct Cell_entier{
+    int num;
+    struct Cell_entier *suiv; 
+}Cell_entier; 
+
+typedef struct liste_commodite{
+    int num; //numéro de la commodite.
+    Commod c; //Les deux extremites de la commodite
+    Cell_entier* chaine; //la chaine la plus courte pour la commodite.
+    struct LC_commo* suiv;
+}LC_commo;
+
+
+typedef struct matrice{
+    Arete** matrice;
+};
+
 Graphe* creerGraphe(Reseau* r);
 Sommet* creer_sommet(int num,double x,double y); 
 Arete* creer_arete(int u, int v); 
+
 int plus_petit_nb_aretes(Graphe* g, int u, int v);
+Cell_entier* arborescence_chemins(Graphe* g, int u, int v);
+int reorganiseReseau(Reseau* r);
+
 void liberer_file(S_file *f); 
 void liberer_sommets(Sommet **T_som, int nbsom);
 void liberer_arete(Cellule_arete *ca);
