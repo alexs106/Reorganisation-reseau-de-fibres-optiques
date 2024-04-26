@@ -215,7 +215,6 @@ Cell_entier* arborescence_chemins(Graphe* g, int u, int v){
 
     while(tmp != u){
         L = ajout_en_tete(L,tmp);
-        printf("ajout de tmp=%d à la liste\n",tmp);
         tmp = predecesseur[tmp-1]; 
     }
     L = ajout_en_tete(L,u);
@@ -242,15 +241,36 @@ int reorganiseReseau(Reseau* r){
     int nb_commodites = g->nbcommod;
     
     LC_commo *lc_commo = NULL; 
+
+    int matrice[g->nbsom][g->nbsom];
+
+    for(int i=0;i<g->nbsom;i++){
+        for(int j=0;j<g->nbsom;j++){
+            matrice[i][j] = 0;
+        }
+    }
     
     for(int i=0; i<nb_commodites;i++){
         Commod c = Tab_commodites[i];
         Cell_entier* chaine = arborescence_chemins(g,c.e1, c.e2); 
+       
+        while(chaine != NULL){
+            if(chaine->suiv != NULL){
+                int x = (chaine->num)-1;
+                int y = (chaine->suiv->num)-1;
+                matrice[x][y] = matrice[x][y] + 1;
+                matrice[y][x] = matrice[y][x] + 1;
+            }
+            chaine = chaine->suiv;
+        }
         lc_commo = ajout_en_tete_commo(lc_commo,chaine,c,i);
     }
-
-    
-
+    for(int l=0;l<g->nbsom;l++){
+        for(int c=0;c<g->nbsom;c++){
+            printf("%d ",matrice[l][c]);
+        }
+        printf("\n");
+    }
 }
 
 

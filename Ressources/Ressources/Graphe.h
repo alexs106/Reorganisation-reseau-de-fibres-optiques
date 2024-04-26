@@ -45,13 +45,10 @@ typedef struct liste_commodite{
     int num; //numéro de la commodite.
     Commod c; //Les deux extremites de la commodite
     Cell_entier* chaine; //la chaine la plus courte pour la commodite.
-    struct LC_commo* suiv;
+    struct liste_commodite* suiv;
 }LC_commo;
 
 
-typedef struct matrice{
-    Arete** matrice;
-};
 
 Graphe* creerGraphe(Reseau* r);
 Sommet* creer_sommet(int num,double x,double y); 
