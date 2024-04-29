@@ -1,7 +1,9 @@
 Noah ALVES 21105881
+
 Alejandra MORALES SAUCEDO 21214631
 
 **Description du projet**
+
 Le projet a porté sur la réorganisation d'un réseau de fibres optiques d'une agglomération grace à différentes structures de données telles que une liste chaînée, une table de hachage, un arbre quaternaire et un graphe. 
 
 Le projet se divise en deux parties : la reconstitution du réseau et la réorganisation du réseau.
