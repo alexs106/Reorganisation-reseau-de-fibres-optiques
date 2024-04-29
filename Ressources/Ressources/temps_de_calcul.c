@@ -61,15 +61,16 @@ int main(int argc,char** argv){
 
 
     //TEST DE LA QUESTION 6.1
-    FILE *f = fopen("05000_USA-road-d-NY.cha", "r");
+    Chaines* chaine = generationAleatoire(1700,100,5000,5000);
+    /*FILE *f = fopen("05000_USA-road-d-NY.cha", "r");
     if (f==NULL){
 		printf("Erreur lors de l'ouverture du fichier \n");
 		return -1;
-	}
+	} */
     int M;
     printf("Veuillez rentrer en entier pour la taille de la table de Hache : ");scanf(" %d", &M);
 
-    Chaines* chaine = lectureChaines(f); 
+    //Chaines* chaine = lectureChaines(f); 
     double temps_lc = 0;
     double temps_lc_debut;
     double temps_lc_fin;
@@ -103,7 +104,7 @@ int main(int argc,char** argv){
 		printf("Erreur lors de l'ouverture du fichier \n");
 		return -1;
 	}
-    fprintf(fw,"Temps de calcul pour le fichier %s\n","05000_USA-road-d-NY.cha");
+    //fprintf(fw,"Temps de calcul pour le fichier %s\n","05000_USA-road-d-NY.cha");
     fprintf(fw,"Liste chainée : %lf secondes\n",temps_lc);
     fprintf(fw,"Table de Hachage de taille %d : %lf secondes\n",M,temps_h);
     fprintf(fw,"Arbre quaternaire : %lf secondes\n",temps_a);
