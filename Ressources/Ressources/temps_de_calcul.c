@@ -60,9 +60,8 @@ int main(int argc,char** argv){
     ecrireChaines(c,f2);*/
 
 
-    /*TEST DE LA QUESTION 6.1
-    char* nom_fichier = argv[1];
-    FILE *f = fopen(nom_fichier, "r");
+    //TEST DE LA QUESTION 6.1
+    FILE *f = fopen("05000_USA-road-d-NY.cha", "r");
     if (f==NULL){
 		printf("Erreur lors de l'ouverture du fichier \n");
 		return -1;
@@ -74,7 +73,7 @@ int main(int argc,char** argv){
     double temps_lc = 0;
     double temps_lc_debut;
     double temps_lc_fin;
-
+    
     double temps_h = 0;
     double temps_h_debut;
     double temps_h_fin;
@@ -84,15 +83,15 @@ int main(int argc,char** argv){
     double temps_a_fin;
 
     temps_lc_debut = clock();
-    reconstitueReseauListe(chaine);
+    Reseau* r_lc = reconstitueReseauListe(chaine);
     temps_lc_fin = clock();
 
     temps_h_debut = clock();
-    reconstitueReseauHachage(chaine,M);
+    Reseau* r_h = reconstitueReseauHachage(chaine,M);
     temps_h_fin = clock();
 
     temps_a_debut = clock();
-    reconstitueReseauArbre(chaine);
+    Reseau* r_a = reconstitueReseauArbre(chaine);
     temps_a_fin = clock();
 
     temps_lc = ((double)(temps_lc_fin-temps_lc_debut))/CLOCKS_PER_SEC;
@@ -104,12 +103,19 @@ int main(int argc,char** argv){
 		printf("Erreur lors de l'ouverture du fichier \n");
 		return -1;
 	}
-    fprintf(fw,"Temps de calcul pour le fichier %s\n",nom_fichier);
+    fprintf(fw,"Temps de calcul pour le fichier %s\n","05000_USA-road-d-NY.cha");
     fprintf(fw,"Liste chainée : %lf secondes\n",temps_lc);
     fprintf(fw,"Table de Hachage de taille %d : %lf secondes\n",M,temps_h);
     fprintf(fw,"Arbre quaternaire : %lf secondes\n",temps_a);
-    fclose(f);*/
 
+    liberer_Chaines(chaine); 
+    liberer_reseau(r_lc);
+    liberer_reseau(r_h);
+    liberer_reseau(r_a);
+    fclose(fw);
+    
+    /*
+    //Test de la question 6.3
     double temps_lc = 0;
     double temps_lc_debut;
     double temps_lc_fin;
@@ -202,6 +208,7 @@ int main(int argc,char** argv){
 
     fclose(f2);
     fclose(f3); 
+    */
     
     return 0;
 }

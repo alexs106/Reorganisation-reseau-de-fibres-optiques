@@ -4,18 +4,19 @@
 #include <stdio.h>
 
 int main(){
-    FILE *f = fopen("00014_burma.cha", "r"); 
+    FILE *f = fopen("05000_USA-road-d-NY.cha", "r"); 
     Chaines * test_chaine = lectureChaines(f);
 
     Reseau* r = reconstitueReseauHachage(test_chaine,10);
     FILE *fw = fopen("test_hachage.txt", "w"); 
-    ecrireReseau(r,fw);
-    afficheReseauSVG(r,"hachage"); 
+    //ecrireReseau(r,fw);
+    //afficheReseauSVG(r,"hachage"); 
 
     //Libération de mémoire
     liberer_reseau(r);
     liberer_Chaines(test_chaine);  
 
+    fclose(fw); 
 
     /*test pour le noeud 12
     int k = cle(16.53,97.38);
@@ -42,7 +43,7 @@ int main(){
    }*/
 
 
-/*
+
 //EXERCICE 4 FAIRE LE TEST DE LA QUESTION 4 !!!!!!
 
     for(int x=1; x<=10;x++){
@@ -50,6 +51,6 @@ int main(){
             printf("x=%d ,y =%d, cle= %d\n", x, y, cle(x,y)); 
         }
     }
-*/
+
     return 0; 
 }

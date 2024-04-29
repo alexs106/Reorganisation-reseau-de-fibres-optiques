@@ -15,6 +15,7 @@ int main(){
     afficheChainesSVG(test_chaine,"chaine"); 
 
     liberer_Chaines(test_chaine);
+    fclose(f2); 
     return 0; 
 
 }
