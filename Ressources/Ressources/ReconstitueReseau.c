@@ -8,9 +8,9 @@
 
 
 int main(int argc,char** argv){
-    
+
     if(argc != 3){
-        printf("Usage: %s fichier.cha n (n un entier entre 1 et 3)\n",argv[0]);
+        printf("Usage: %s fichier.cha n (n un entier entre 1 et 3 pour choisir la méthode.)\n",argv[0]);
         return 1;
     }
 
@@ -25,7 +25,7 @@ int main(int argc,char** argv){
     Chaines * chaine = lectureChaines(f); 
 
     if(num_meth == 1){
-        printf("Vous avez choisi la méthode 1 avec liste\n");
+        printf("Vous avez choisi la méthode 1 avec liste chaînée.\n");
         Reseau* reseau1 = reconstitueReseauListe(chaine);
         FILE *f1 = fopen("fichier_res_avec_liste.txt", "w"); 
         ecrireReseau(reseau1,f1);
@@ -37,7 +37,7 @@ int main(int argc,char** argv){
     }
     else if(num_meth == 2){
         int M; //M va stocker la taille de la table.
-        printf("Vous avez choisi la méthode 2 avec table de hachage\n");
+        printf("Vous avez choisi la méthode 2 avec table de hachage.\n");
         printf("Veuillez rentrer en entier pour la taille de la table de Hache : ");scanf(" %d", &M);
         Reseau* reseau2 = reconstitueReseauHachage(chaine,M);
         FILE *f2 = fopen("fichier_res_avec_TDH.txt", "w"); 

@@ -2,15 +2,24 @@
 #include "Reseau.h"
 #include "Chaine.h"
 
+
+
 int main(){
    
-    int u = 1;
-    int v = 3;
-    FILE *f = fopen("00014_burma.cha", "r"); 
-    Chaines * test = lectureChaines(f);
+    //FILE *f = fopen("00014_burma.cha", "r"); 
+    FILE *f = fopen("05000_USA-road-d-NY.cha", "r"); 
+    //FILE *f = fopen("07397_pla.cha", "r"); 
 
-    Reseau* r = reconstitueReseauListe(test); 
-    int val = reorganiseReseau(r);
+    
+    Chaines* test = lectureChaines(f);
+    Reseau* r_lc = reconstitueReseauListe(test);
+    int val = reorganiseReseau(r_lc);
+    liberer_Chaines(test);
+    liberer_reseau(r_lc);
+    
+
+    //Reseau* r = reconstitueReseauListe(test); 
+    //int val = reorganiseReseau(r);
    /* Graphe* g = creerGraphe(r);
     Cell_entier* l =  arborescence_chemins(g,u,v);
     

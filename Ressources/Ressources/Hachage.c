@@ -35,6 +35,7 @@ int hachage(int k,TableHachage* h){
 /*Cette fonction retourne le noeud x et y s'il existe sinon la fonction le construit et l'ajoute dans la table de hachage*/
 Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage*H, double x, double y){
     //on initialise les éléments de la table de hachage
+
     int c = cle(x,y);
     int indice = hachage(c,H);
 
@@ -72,6 +73,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage*H, double x, double y){
 
 /*Fonction qui reconstruit le réseau à partir de la liste de chaînes C avec une table de hachage de taille M*/
 Reseau* reconstitueReseauHachage(Chaines *C, int M){
+
     //Création du reseau.
     Reseau* reseau = creer_reseau();
     reseau->gamma = C->gamma;

@@ -129,8 +129,12 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
     while(!(estFileVide(f))){
         int val = defile(f);
         if(val == v){
+           
+            free(visite);
             liberer_file(f); 
-            return chemin[v-1]; 
+            int c = chemin[v-1];
+            free(chemin);
+            return c; 
         }
 
         Cellule_arete *courante = g->T_som[val-1]->L_voisin;
@@ -152,6 +156,8 @@ int plus_petit_nb_aretes(Graphe* g, int u, int v){
 
     }
     liberer_file(f); 
+    free(chemin);
+    free(visite);
     return -1; //Pas de chemin
 }
 
@@ -219,6 +225,9 @@ Cell_entier* arborescence_chemins(Graphe* g, int u, int v){
     }
     L = ajout_en_tete(L,u);
     liberer_file(f);
+    free(chemin);
+    free(predecesseur);
+    free(visite);
     return L; 
 }
 /*Cette fonction -crée le graphe correspondant au réseau.
@@ -226,34 +235,45 @@ Cell_entier* arborescence_chemins(Graphe* g, int u, int v){
                  -et qui retourne vrai si pour toute arête du graphe, le nombre de chaı̂nes qui passe par cette
                  arête est inférieur à γ, et faux sinon. On créera une matrice permettant de compter le nombre
                  de chaı̂nes passant par chaque arête {u, v}.*/
-LC_commo* ajout_en_tete_commo(LC_commo *L, Cell_entier* Chaine,Commod com,int numéro){
-    LC_commo *nouveau = (LC_commo*)malloc(sizeof(LC_commo)); 
-    nouveau->num = numéro;
-    nouveau->c = com;
-    nouveau->chaine = Chaine;
-    nouveau->suiv = L;
-    return nouveau; 
-}
 
 int reorganiseReseau(Reseau* r){
     Graphe* g = creerGraphe(r);
     Commod* Tab_commodites = g->T_commod;
     int nb_commodites = g->nbcommod;
-    
-    LC_commo *lc_commo = NULL; 
+    printf("nb_sommets = %d\n",g->nbsom);
+    printf("nb_commodite = %d\n",g->nbcommod);
 
-    int matrice[g->nbsom][g->nbsom];
 
-    for(int i=0;i<g->nbsom;i++){
-        for(int j=0;j<g->nbsom;j++){
+    //Création d'une matrice sommet-sommet pour stocker le nombre de fois qu'on visite une arête {u,v}.
+    // Allocation de mémoire pour les lignes
+    int **matrice = malloc(sizeof(int *) * g->nbsom);
+    if(matrice == NULL){
+        printf("Erreur d'allocation de mémoire.\n");
+        return 1;
+    }
+
+    // Allocation de mémoire pour les colonnes
+    for(int i=0; i<g->nbsom; i++) {
+        matrice[i] = (int *)malloc(g->nbsom * sizeof(int));
+        if(matrice[i] == NULL) {
+            printf("Erreur d'allocation de mémoire.\n");
+            return 1;
+        }
+    }
+
+    //Remplissage de la matrice avec à 0.
+    for(int i=0; i<g->nbsom; i++) {
+        for(int j=0; j<g->nbsom; j++) {
             matrice[i][j] = 0;
         }
     }
-    
+
+    //on parcourt le tableau des comomdites.
     for(int i=0; i<nb_commodites;i++){
         Commod c = Tab_commodites[i];
-        Cell_entier* chaine = arborescence_chemins(g,c.e1, c.e2); 
-       
+        Cell_entier* chaine = arborescence_chemins(g,c.e1, c.e2); //la variable chaine contient la chaine d'entier entre les deux extrémitées.
+        Cell_entier* tmp =NULL;
+        //on parcourt la chaine la plus courte entre les deux sommets.
         while(chaine != NULL){
             if(chaine->suiv != NULL){
                 int x = (chaine->num)-1;
@@ -261,76 +281,34 @@ int reorganiseReseau(Reseau* r){
                 matrice[x][y] = matrice[x][y] + 1;
                 matrice[y][x] = matrice[y][x] + 1;
             }
-            chaine = chaine->suiv;
+            tmp = chaine->suiv;
+            free(chaine);
+            chaine = tmp;
         }
-        lc_commo = ajout_en_tete_commo(lc_commo,chaine,c,i);
     }
+
+    //Le parcourt de ces boucles for permettent d'éviter la réptition des arêtes {u,v} et {v,u}.
+    int val = 0;
     for(int l=0;l<g->nbsom;l++){
-        for(int c=0;c<g->nbsom;c++){
-            printf("%d ",matrice[l][c]);
+        for(int c=l;c<g->nbsom;c++){
+            if(!(matrice[l][c] < g->gamma)){
+                printf("on est passé %d fois sur l'arête {%d,%d} et qui supérieur au gamma(=%d)\n",matrice[l][c],l+1,c+1,g->gamma);
+                val = 1;
+            }
         }
-        printf("\n");
     }
+
+    // Libération de la mémoire de la matrice sommet-sommet.
+    for(int x=0; x<g->nbsom; x++) {
+        free(matrice[x]);
+    }
+    free(matrice);
+
+    //libération du graphe.
+    liberer_graphe(g);
+    
+    return val;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*Fonction qui libère la file*/

@@ -6,6 +6,7 @@
 #include "Reseau.h"
 
 
+
 typedef struct{
     int u,v; /* Numeros des sommets extremite */
 }Arete;
