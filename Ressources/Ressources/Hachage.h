@@ -10,7 +10,7 @@ typedef struct{
 
 TableHachage* creation_table_hachage(int tailleM);
 int cle(double x,double y); 
-int hachage(int k, TableHachage *h); 
+int hachage(int cle, TableHachage *h); 
 Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage* H, double x, double y);
 Reseau* reconstitueReseauHachage(Chaines *C, int M);
 void liberation_hachage(TableHachage* TableH); 

@@ -59,32 +59,27 @@ int main(int argc,char** argv){
     Chaines* c = generationAleatoire(10,5,5,5);
     ecrireChaines(c,f2);*/
 
-
-    //TEST DE LA QUESTION 6.1
-    //Chaines* chaine = generationAleatoire(40,10,50,50);
-    //char fichier[] = "00014_burma.cha";
-    //char fichier2[] = "05000_USA-road-d-NY.cha";
-    //char fichier3[] = "07397_pla.cha";
-    //FILE *f = fopen("00014_burma.cha", "r");
-    FILE *f = fopen("05000_USA-road-d-NY.cha", "r");
+   /*TEST DE LA QUESTION 6.1*/
+    char* nom_fichier = argv[1];
+    FILE *f = fopen(nom_fichier, "r");
     if (f==NULL){
 		printf("Erreur lors de l'ouverture du fichier \n");
 		return -1;
 	}
     
-    //int M;
-    //printf("Veuillez rentrer en entier pour la taille de la table de Hache : ");scanf(" %d", &M);
+    int M;
+    printf("Veuillez rentrer en entier pour la taille de la table de Hache : ");scanf(" %d", &M);
 
     Chaines* chaine = lectureChaines(f); 
     
     double temps_lc = 0;
     double temps_lc_debut;
     double temps_lc_fin;
-    /*
+    
     double temps_h = 0;
     double temps_h_debut;
     double temps_h_fin;
-*/
+
     double temps_a = 0;
     double temps_a_debut;
     double temps_a_fin;
@@ -92,48 +87,36 @@ int main(int argc,char** argv){
     temps_lc_debut = clock();
     Reseau* r_lc = reconstitueReseauListe(chaine);
     temps_lc_fin = clock();
-/*
+
     temps_h_debut = clock();
     Reseau* r_h = reconstitueReseauHachage(chaine,M);
     temps_h_fin = clock();
-    */
+
     temps_a_debut = clock();
     Reseau* r_a = reconstitueReseauArbre(chaine);
     temps_a_fin = clock();
 
     temps_lc = ((double)(temps_lc_fin-temps_lc_debut))/CLOCKS_PER_SEC;
-	//temps_h = ((double)(temps_h_fin-temps_h_debut))/CLOCKS_PER_SEC;
+	temps_h = ((double)(temps_h_fin-temps_h_debut))/CLOCKS_PER_SEC;
     temps_a = ((double)(temps_a_fin-temps_a_debut))/CLOCKS_PER_SEC;
 
-    FILE * fw=fopen("temps_de_calcul.txt","w");
+    FILE * fw=fopen("temps_de_calcul.txt","a");
 	if (fw==NULL){
 		printf("Erreur lors de l'ouverture du fichier \n");
 		return -1;
 	}
-    //fprintf(fw,"Temps de calcul pour le fichier %s\n",);
+    fprintf(fw,"Temps de calcul pour le fichier %s\n",nom_fichier);
     fprintf(fw,"Liste chainée : %lf secondes\n",temps_lc);
-    //fprintf(fw,"Table de Hachage de taille %d : %lf secondes\n",M,temps_h);
+    fprintf(fw,"Table de Hachage de taille %d : %lf secondes\n",M,temps_h);
     fprintf(fw,"Arbre quaternaire : %lf secondes\n",temps_a);
+    fprintf(fw,"\n");
+    
     liberer_Chaines(chaine); 
-   
     liberer_reseau(r_lc);
-    //liberer_reseau(r_h);
+    liberer_reseau(r_h);
     liberer_reseau(r_a);
     fclose(fw);
-    
-
-    //aucune erreur pour la liste chainée. j'ai vérifié avec Valgrind.
-    //aucune erreur pour la table de hachage. j'ai vérifié avec Valgrind.
-    //aucune erreur pour l'arbre . j'ai vérifié avec Valgrind.
-    //aucune erreur pour les fonctions lancées en même temps avec la génération d'une chaine aléatoire. 
- //aucune erreur avec generationAleatoire(1700,300,300,50);
-
- //aucune erreur pour la liste chaine avec le fichier "05000_USA-road-d-NY.cha". 20 secondes
-//aucune erreur pour la liste chaine avec le fichier "07397_pla.cha". 68 secondes
-
-// aucune erreur pour l'arbre avec le fichier "05000_USA-road-d-NY.cha" . 0.46 secondes.
-//aucune erreur pour l'arbre avec le fichier "07397_pla.cha" . 0.89 secondes.
-
+ 
     /*
     //Test de la question 6.3
     double temps_lc = 0;

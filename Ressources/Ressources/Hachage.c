@@ -19,17 +19,27 @@ TableHachage* creation_table_hachage(int tailleM){
 }
 
 /*Cette fonction permet d'obtenir une clé avec les coordonnées x et y.*/
-int cle(double x,double y){
+/*int cle(double x,double y){
     int res = (y+(x+y)*(x+y+1))/2;
     return res; 
 }
+*/
+int cle(double x,double y){
+    int g = y;
+    int d = ((x+y)*(x+y+1)/2);
+    int val = g + d;
+    return abs(val);
+}
+
 
 /*Cette fonction permet d'obtenir clé hachée (l'indice de la clé dans la table de hachage)*/ 
+
 int hachage(int k,TableHachage* h){
     int M = h->tailleMax;
     double A = (sqrt(5)-1)/2;
     int tmp = k*A; 
-    return M * (k*A - tmp); 
+    int r = M * (k*A - tmp);
+    return abs(r); 
 }
 
 /*Cette fonction retourne le noeud x et y s'il existe sinon la fonction le construit et l'ajoute dans la table de hachage*/
@@ -39,6 +49,7 @@ Noeud* rechercheCreeNoeudHachage(Reseau* R, TableHachage*H, double x, double y){
     int c = cle(x,y);
     int indice = hachage(c,H);
 
+    
     CellNoeud* cell_n = H->T[indice]; //on récupère la liste CellNoeud à l'indice donné.
     
     while(cell_n != NULL){ //on parcourt alors cette liste
@@ -93,7 +104,6 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
 
         //Premier point, on le cherche et le rajoute s'il n'est pas dans le réseau
         Noeud* n = rechercheCreeNoeudHachage(reseau, TH, liste_points->x, liste_points->y); 
-
         commodite->extrA = n; 
         //On parcourt tous les CellPoints
         while(liste_points->suiv != NULL){

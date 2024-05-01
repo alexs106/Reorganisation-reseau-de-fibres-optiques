@@ -4,10 +4,11 @@
 #include <stdio.h>
 
 int main(){
+    //FILE *f = fopen("00014_burma.cha", "r");
     FILE *f = fopen("05000_USA-road-d-NY.cha", "r"); 
     Chaines * test_chaine = lectureChaines(f);
 
-    Reseau* r = reconstitueReseauHachage(test_chaine,10);
+    Reseau* r = reconstitueReseauHachage(test_chaine,200);
     FILE *fw = fopen("test_hachage.txt", "w"); 
     //ecrireReseau(r,fw);
     //afficheReseauSVG(r,"hachage"); 
@@ -45,12 +46,12 @@ int main(){
 
 
 //EXERCICE 4 FAIRE LE TEST DE LA QUESTION 4 !!!!!!
-
+/*
     for(int x=1; x<=10;x++){
         for(int y=1; y<=10; y++){
             printf("x=%d ,y =%d, cle= %d\n", x, y, cle(x,y)); 
         }
     }
-
+*/
     return 0; 
 }

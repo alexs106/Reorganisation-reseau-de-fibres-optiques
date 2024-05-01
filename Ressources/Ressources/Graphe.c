@@ -240,8 +240,6 @@ int reorganiseReseau(Reseau* r){
     Graphe* g = creerGraphe(r);
     Commod* Tab_commodites = g->T_commod;
     int nb_commodites = g->nbcommod;
-    printf("nb_sommets = %d\n",g->nbsom);
-    printf("nb_commodite = %d\n",g->nbcommod);
 
 
     //Création d'une matrice sommet-sommet pour stocker le nombre de fois qu'on visite une arête {u,v}.
@@ -286,17 +284,20 @@ int reorganiseReseau(Reseau* r){
             chaine = tmp;
         }
     }
-
+    //Ce parcourt n'est pas obligatoire car nous savons si nous sommes passés un nombre de fois supérieur au gamma grâce à la variable val.
     //Le parcourt de ces boucles for permettent d'éviter la réptition des arêtes {u,v} et {v,u}.
     int val = 0;
+    int s =0;
     for(int l=0;l<g->nbsom;l++){
-        for(int c=l;c<g->nbsom;c++){
+        for(int c=l;c<g->nbsom;c++){ //c=l  pour éviter {u,v} et {v,u}.
             if(!(matrice[l][c] < g->gamma)){
-                printf("on est passé %d fois sur l'arête {%d,%d} et qui supérieur au gamma(=%d)\n",matrice[l][c],l+1,c+1,g->gamma);
+                printf("on est passé %d fois sur l'arête {%d,%d} et qui est supérieur au gamma(=%d)\n",matrice[l][c],l+1,c+1,g->gamma);
                 val = 1;
+                s++;
             }
         }
     }
+    printf("\nIl y %d arête(s) qui dépasse gamma !\n",s);
 
     // Libération de la mémoire de la matrice sommet-sommet.
     for(int x=0; x<g->nbsom; x++) {

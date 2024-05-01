@@ -66,15 +66,14 @@ Voir la section : Analyse commentée des performances de nos programmes
 
 
 ***Exercice 7, question 5***
-# NOAH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+En testant la fonction reorganiseReseau sur les trois instances données, nous avons remarqué qu’il existe au moins une arête dont la valeur dépasse le gamma. Pour améliorer cette fonction, il serait judicieux de prendre en compte les situations où une arête se rapproche du gamma ou l’atteint
 
+Lorsqu’une arête approche du gamma, il pourrait être intéressant de rechercher un autre chemin pour les autres arêtes, même si ce chemin n’est pas le plus rapide. De plus, nous pourrions stocker les arêtes qui ne sont plus accessibles (c’est-à-dire celles qui ont été parcourues trop de fois) afin de trouver une alternative.
 
-Pour améliorer la fonction on pourrait remplacer la matrice carré sommet-sommet par une matrice triangulaire qui nous permettrait d'économiser de l'espace mémoire et du temps de calcul pour stocker le nombre de chaînes qui passent par chaque arête. 
+Cela pourrait être une solution pour améliorer notre programme et réduire le nombre d’arêtes qui dépassent le seuil gamma.
 
 
 **Description des jeux d'essais** 
-pour chaque main les tests qui peuvent
-
 Exercice 1 : 
 Exemple d'usage : ./ChaineMain nom_fichier.cha 
 Une structure Chaine sera créée et l'utilisateur pourra voir sur le terminal la longueur totale des chaînes et le nombre total de point.
@@ -89,9 +88,18 @@ Exemple d'usage : ./ReconstitueReseau fichier.cha n        (n un entier entre 1 
 Pour chacune des méthodes, un fichier .txt est créé dans le répertoire de l'utilisateur qui a pour but de voir l'ensemble des sommets, l'ensemble des liaisons et l'ensemble des commodités.
 Ainsi qu'un fichier .html pour visualiser le réseau.
 
-Exercice 6 : La question 6.1 nous demand d'écrire un main pour  
 
+Exercice 6 :
+La question 6.1 nous demande d'écrire un main qui exécute automatiquement les trois fonctions de reconstruction et qui calcule uniquement leur temps de calcul. Ce main est écrit dans le fichier 'temps_de_calcul.c'. 
+Exemple d'usage : ./temps_de_calcul.c nom_fichier.cha
+A chaque fois que l'utilisateur va faire cette commande, cela va écrire les temps de calcul pour chacune des méthodes.
 
+Exercice 7 :
+Pour tester la fonction reorganisationReseau, nous avons décidé de créer un fichier ‘mainG.c’ qui va demander à l’utilisateur d’entrer un fichier .cha et un numéro de méthode. Le numéro de méthode permet de savoir avec quelles méthodes l’utilisateur souhaite réorganiser le réseau.
+
+Ensuite, nous appliquons la fonction reorganisation sur le réseau qui vient d’être créé, afin de déterminer si nous parcourons chaque chaîne un nombre de fois supérieur au gamma ou non. Les arêtes qui dépassent le gamma seront affichées dans le terminal, ainsi que le nombre d’arêtes qui le dépassent.
+
+Exemple d'usage: ./graphe nom_fichier.cha n        (n un entier entre 1 et 3 pour choisir la méthode)
 
 
 

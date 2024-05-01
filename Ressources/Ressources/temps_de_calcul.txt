@@ -1,19 +1,1 @@
-Temps de calcul pour le fichier 00014_burma.cha
-Liste chainée : 0.000016 secondes
-Table de Hachage de taille 10 : 0.000019 secondes
-Arbre quaternaire : 0.000028 secondes
 
-Temps de calcul pour le fichier 05000_USA-road-d-NY.cha
-Liste chainée : 41.933611 secondes
-Table de Hachage de taille 100 : 44.075463 secondes
-Arbre quaternaire : 0.975671 secondes
-
-Temps de calcul pour le fichier 05000_USA-road-d-NY.cha
-Liste chainée : 41.933611 secondes
-Table de Hachage de taille 1800 : 5.075463 secondes
-Arbre quaternaire : 0.975671 secondes
-
-Temps de calcul pour le fichier 07397_pla.cha
-Liste chainée : 26.439907 secondes
-Table de Hachage de taille 100 : 23.043768 secondes
-Arbre quaternaire : 0.116468 secondes
