@@ -13,6 +13,7 @@ int main(int argc,char** argv){
     Chaines* chaines = lectureChaines(f); //construction de la chaine.
     printf("\nLongueur physique totale des chaînes : %.4f\n",longueurTotale(chaines));
     printf("Nombre total de points : %d\n",comptePointsTotal(chaines));
+    printf("Un fichier 'chaine.html a été créé dans votre répertoire\n");
     afficheChainesSVG(chaines,"chaine"); 
 
     int rep;

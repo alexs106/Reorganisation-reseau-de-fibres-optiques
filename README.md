@@ -42,6 +42,7 @@ Le code insererNoeudArbre nous permet d'insérer un noeud en fonction de différ
 
 
 **Description schématique des algorithmes que nous avons crées**
+# ALEX !!!!!!!!!!!!!!
 
 
 **Réponses aux questions**
@@ -75,9 +76,22 @@ Pour améliorer la fonction on pourrait remplacer la matrice carré sommet-somme
 pour chaque main les tests qui peuvent
 
 Exercice 1 : 
-Exemple d'utilisation : ./ChaineMain nom_fichier.cha 
+Exemple d'usage : ./ChaineMain nom_fichier.cha 
 Une structure Chaine sera créée et l'utilisateur pourra voir sur le terminal la longueur totale des chaînes et le nombre total de point.
 On lui demande s'il veut créer ou non un autre fichier avec cette chaine.
+
+Exercice 2 : La question 2.3 nous demande d'écrire un main 'ReconstitueReseau.c'.
+Exemple d'usage : ./ReconstitueReseau fichier.cha n        (n un entier entre 1 et 3 pour choisir la méthode).
+1er méthode : Liste chainéé.
+2eme méthode : Table de Hachage
+3eme méthode : Arbre quaternaire.
+
+Pour chacune des méthodes, un fichier .txt est créé dans le répertoire de l'utilisateur qui a pour but de voir l'ensemble des sommets, l'ensemble des liaisons et l'ensemble des commodités.
+Ainsi qu'un fichier .html pour visualiser le réseau.
+
+Exercice 6 : La question 6.1 nous demand d'écrire un main pour  
+
+
 
 
 
@@ -85,3 +99,15 @@ On lui demande s'il veut créer ou non un autre fichier avec cette chaine.
 
 **Analyse commentée des performances de nos programmmes***
 
+Quand on exécute le code de la question 6.3 qui renvoi les temps de calcul pour la fonction ReconstitueReseau de chaque structure : la liste châinée, la table de hachage et l'arbre quaternaire. 
+On fait varier la taille de la table de hachage avec les valeurs de M suivantes : 10, 50, 100, 500, 1000.
+
+En observant les temps de calculs stockées dans les fichiers *temps_calcul_ha.txt* et *temps_calcul_lc.txt* on remarque que la reconstitution du réseau en passant par la **liste chaînée** prend le plus de temps et devient très rapidement croissante.
+Il s'agit de la structure la moins convenable pour reconstituer notre réseau. 
+
+En revanche, pour la **table de hachage**, tant que la taille de la table soit supérieure au nombre de chaînes dans le réseau, son temps de calcul n'augmente pas beaucoup.
+Cela dit, pour notre test on a décidé que la taille maximale de la table de hachage serait 1000 pour vérifier si dans le pire des cas, ce temps de calcul était supérieur à celui de la liste chaînée. 
+
+Finalement, **l'arbre quaternaire** se proclame vainqueur car même dans le cas de NbChaines = 5000, son temps de calcul n'atteint jamais une seconde. Nous avons décidé de faire un graphe suplémentaire pour montrer la courte croissance du temps de calcul pour l'arbre quaternaire. 
+
+Pour conclure, on peut dire que si l'espace mémoire n'est pas un facteur important, la table de hachage d'une taille supérieur au nombre de chaînes est l'option la plus convenable. Cependant, en termes de temps de calcul, **l'arbre quaternaire** est la meilleure option pour reconstituer notre réseau de fibres optiques. 
