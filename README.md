@@ -24,9 +24,21 @@ Nous pouvons événtuellement avoir une represenatation graphiques des instances
 
 
 
+Partie 2 : Reconstitution du réseau.
+Cette partie est composée des exercices 2,3,4,5 et 6. 
+
+Dans l'exercice 2, nous devons reconstruire le réseau à partir de la liste chainée.
+
+Dans l'exercice 4, nous devons reconstruire le réseau à partir d'une table de hachage. Nous avons créé un fichier hachage.c qui va contenir l'ensemble des programmes qui nous est utile et un fichier hachage.h pour les signatures et la structure TableHachage.
+
+Dans l'exercice 5, la reconstruction du réseau se fait avec un arbre quaternaire. Le fichier ArbreQuat.h contient la structure du noeud de cet arbre, ainsi que l'ensemble des signatures des fonctions qu'on peut retrouver dans le fichier AbreQuat.c.
+
+Le code chaineCoordMinMax est utile pour obtenir le centre.
+Le code insererNoeudArbre nous permet d'insérer un noeud en fonction de différents cas.
+ # CONTINUER CETTE PARTIE !!!!
 
 
-Partie 2 : 
+
 
 
 **Description schématique des algorithmes que nous avons crées**
@@ -62,9 +74,12 @@ Pour améliorer la fonction on pourrait remplacer la matrice carré sommet-somme
 **Description des jeux d'essais** 
 pour chaque main les tests qui peuvent
 
-Le fichier ChaineMain.c à pour but d'appliquer l'ensemble des fonctions écrites précédement en fonction du choix de l'utilisateur. 
+Exercice 1 : 
 Exemple d'utilisation : ./ChaineMain nom_fichier.cha 
-Dans le répertoire de l'utilisateur 
+Une structure Chaine sera créée et l'utilisateur pourra voir sur le terminal la longueur totale des chaînes et le nombre total de point.
+On lui demande s'il veut créer ou non un autre fichier avec cette chaine.
+
+
 
 # NOAH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

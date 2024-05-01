@@ -11,27 +11,21 @@ int main(int argc,char** argv){
     char* nom_fichier = argv[1];
     FILE* f = fopen(nom_fichier, "r");
     Chaines* chaines = lectureChaines(f); //construction de la chaine.
-    printf("Longueur physique totale des chaînes : %.4f\n",longueurTotale(chaine));
-    printf("Nombre total de point : %d\n",comptePointsTotal(chaine));
+    printf("\nLongueur physique totale des chaînes : %.4f\n",longueurTotale(chaines));
+    printf("Nombre total de points : %d\n",comptePointsTotal(chaines));
+    afficheChainesSVG(chaines,"chaine"); 
 
-    printf("Souhaitez-vous écrire cette chaine sur autre fichier ? si oui tapez 1 sinon 0\n")
-    printf("")
-
-
-
-
-    //FILE *f = fopen("00014_burma.cha", "r");
-    //FILE *f2 = fopen("testChaine.txt", "w"); 
-    Chaines * chaines = lectureChaines(f);
-    ecrireChaines(test_chaine, f2); 
-   
-    printf("%.4f\n",longueurTotale(test_chaine));
-    printf("%d\n",comptePointsTotal(test_chaine));
-    
-    afficheChainesSVG(test_chaine,"chaine"); 
-
-    liberer_Chaines(test_chaine);
-    fclose(f2); 
+    int rep;
+    printf("\nSouhaitez-vous écrire cette chaine sur autre fichier ? si oui taper 1 sinon taper 0 : ");scanf(" %d", &rep);
+    if(rep==1){
+        FILE *f2 = fopen("testChaine.txt", "w");
+        printf("Un fichier 'testChaine.txt' a été créé dans votre répertoire.\n");
+        ecrireChaines(chaines, f2);
+        fclose(f2); 
+        printf("\nFin du programme.\n");
+    }else{
+        printf("\nFin du programme.\n");
+    }
+    liberer_Chaines(chaines);
     return 0; 
-
 }
