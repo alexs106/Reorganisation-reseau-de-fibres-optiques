@@ -17,6 +17,16 @@ Pour la deuxième partie, la réorganisation du réseau consiste à répartir le
 Un câble du réseau est un fourreau qui contient exactement gamma > 0 fibres optiques. Les câbles relient deux points du plan, soit des clients ou des concentrateurs qui eux permettent de relier des tronçons de fibres. Ces tronçons reliés par un même concentrateur forment une châine dans le réseau. Une châine relie deux points clients qu'on appelle une commodité, les extremités de cette chaîne.  
 
 **Description des structures manipulés, description globale de votre code**
+Partie 1 : Lecture, stockage et affichage des données. 
+Cette partie est composée de l'exercice 1, cet exercice à pour but de reconstruire une instance d'une structure Chaines à partir d'un fichier, ou bien d'écrire le contenu d'une Chaines sur un fichier en respectant un format donné.
+Nous pouvons événtuellement avoir une represenatation graphiques des instances grâçe à la fonction afficheChaineSVG, elle permet de créer un fichier SVG en HTML et qui sera lu depuis un explorateur internet.
+
+
+
+
+
+
+Partie 2 : 
 
 
 **Description schématique des algorithmes que nous avons crées**
@@ -30,31 +40,33 @@ De ce fait, la fonction *cle (x,y)* nous semble pas appropriée car elle peut en
 L'unicité de la cléf de hachage est essentielle pour diminuer les problèmes de collisions. 
 
 ***Exercice 6, question 1***
+Quand on exécute les trois fonctions de reconstruction avec le temps de calcul pour les instances fournies, on observe que lorsqu'on utilise un nombre de chaînes très petit, les temps de calcul pour les 3 structures sont plutôt similaires. 
+
+Pour une instance plus grande, si la table de hachage est de taille inférieure au nombre de chaînes, son temps de calcul resemble à celui de la liste chaînée, soit 40 fois plus long que celui de l'arbre quaternaire. 
+
+Cependant, si la table de hachage est de taille supérieure ou égale au nombre de chaînes, sont  temps de calcul se rapproche à celui de l'arbre 
 
 ***Exercice 6, question 4***
+Voir la section : Analyse commentée des performances de nos programmes
+
+
+
 
 ***Exercice 7, question 5***
+# NOAH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-**Description des jeux d'essais**
+
+Pour améliorer la fonction on pourrait remplacer la matrice carré sommet-sommet par une matrice triangulaire qui nous permettrait d'économiser de l'espace mémoire et du temps de calcul pour stocker le nombre de chaînes qui passent par chaque arête. 
+
+
+**Description des jeux d'essais** 
+pour chaque main les tests qui peuvent
+
+Le fichier ChaineMain.c à pour but d'appliquer l'ensemble des fonctions écrites précédement en fonction du choix de l'utilisateur. 
+Exemple d'utilisation : ./ChaineMain nom_fichier.cha 
+Dans le répertoire de l'utilisateur 
+
+# NOAH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 **Analyse commentée des performances de nos programmmes***
 
-Temps de calcul pour le fichier 00014_burma.cha
-Liste chainée : 0.000016 secondes
-Table de Hachage de taille 10 : 0.000019 secondes
-Arbre quaternaire : 0.000028 secondes
-
-Temps de calcul pour le fichier 05000_USA-road-d-NY.cha
-Liste chainée : 41.933611 secondes
-Table de Hachage de taille 100 : 44.075463 secondes
-Arbre quaternaire : 0.975671 secondes
-
-Temps de calcul pour le fichier 07397_pla.cha
-Liste chainée : 26.439907 secondes
-Table de Hachage de taille 100 : 23.043768 secondes
-Arbre quaternaire : 0.116468 secondes
-
-Temps de calcul pour le fichier 00014_burma.cha
-Liste chainée : 0.000060 secondes
-Table de Hachage de taille 100 : 0.000060 secondes
-Arbre quaternaire : 0.000051 secondes
