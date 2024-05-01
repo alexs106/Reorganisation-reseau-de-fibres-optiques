@@ -2,50 +2,79 @@
 
 **Alejandra MORALES SAUCEDO 21214631**
 
-**Description du projet**
+## Description du projet
 
 Le projet a porté sur la réorganisation d'un réseau de fibres optiques d'une agglomération grace à différentes structures de données telles que une liste chaînée, une table de hachage, un arbre quaternaire et un graphe. 
 
-Le projet se divise en deux parties : la reconstitution du réseau et la réorganisation du réseau.
+Le projet se divise en deux parties : **la reconstitution du réseau et la réorganisation du réseau**.
 
 Les réseau de fibres se compose d'un ensemble de câbles, chaque cable comportant un esemble de fibres optiques qui relient des clients. 
 
 Pour la première partie, la reconstitution du réseau consiste à regrouper l'ensemble des fibres optiques de tous les opérateurs qui constituent le réseau de l'agglomération afin d'avoir un plan complet du réseau.
 
-Pour la deuxième partie, la réorganisation du réseau consiste à répartir les chaînes de tronçons de fibres qui relient une pair de clients afin d'éviter les problème de sur-exploitation et longueurs excessives des châines. 
+Pour la deuxième partie, la réorganisation du réseau consiste à répartir les *chaînes* de tronçons de fibres qui relient une pair de clients afin d'éviter les problème de sur-exploitation et longueurs excessives des châines. 
 
-Un câble du réseau est un fourreau qui contient exactement gamma > 0 fibres optiques. Les câbles relient deux points du plan, soit des clients ou des concentrateurs qui eux permettent de relier des tronçons de fibres. Ces tronçons reliés par un même concentrateur forment une châine dans le réseau. Une châine relie deux points clients qu'on appelle une commodité, les extremités de cette chaîne.  
+Un câble du réseau est un fourreau qui contient exactement *gamma* > 0 fibres optiques. Les câbles relient deux points du plan, soit des clients ou des concentrateurs qui eux permettent de relier des tronçons de fibres. Ces tronçons reliés par un même concentrateur forment une châine dans le réseau. Une châine relie deux points clients qu'on appelle une *commodité*, les extremités de cette chaîne.  
 
-**Description des structures manipulés, description globale de votre code**
-Partie 1 : Lecture, stockage et affichage des données. 
+## Description des structures manipulés, description globale de votre code
+
+**Partie 1 : Lecture, stockage et affichage des données**
+
 Cette partie est composée de l'exercice 1, cet exercice à pour but de reconstruire une instance d'une structure Chaines à partir d'un fichier, ou bien d'écrire le contenu d'une Chaines sur un fichier en respectant un format donné.
-Nous pouvons événtuellement avoir une represenatation graphiques des instances grâçe à la fonction afficheChaineSVG, elle permet de créer un fichier SVG en HTML et qui sera lu depuis un explorateur internet.
+Nous avons trois fichiers utilisés pour cet exercice : **Chaine.c, Chaine.h et ChaineMain.c**
+Nous pouvons événtuellement avoir une representation graphique des instances grâce à la fonction **afficheChaineSVG**, elle permet de créer un fichier SVG en HTML et qui sera lu depuis un explorateur internet.
 
 
 
-
-Partie 2 : Reconstitution du réseau.
+**Partie 2 : Reconstitution du réseau**
 Cette partie est composée des exercices 2,3,4,5 et 6. 
 
-Dans l'exercice 2, nous devons reconstruire le réseau à partir de la liste chainée.
+Dans l'exercice 2, nous devons reconstruire le réseau à partir de la liste chaînée. Le fichier **Reseau.c** contient l'ensemble des fonctions qui permettent de reconstruire le réseau à partir de la liste châinée dont la fonction principale *reconstitueReseauListe(Chaines *C);*. 
+Le fichier **Reseau.h** contient l'ensemble des structures et définitions des fonctions utilisés.
 
-Dans l'exercice 4, nous devons reconstruire le réseau à partir d'une table de hachage. Nous avons créé un fichier hachage.c qui va contenir l'ensemble des programmes qui nous est utile et un fichier hachage.h pour les signatures et la structure TableHachage.
+On crée aussi un programme main **ReconstitueReseau.c** qui permet de choisir en paramètre la méthode que l'on désire utiliser pour reconstituer le réseau avec une structure spécifique sur un fichier .cha donné en paramètre.
 
-Dans l'exercice 5, la reconstruction du réseau se fait avec un arbre quaternaire. Le fichier ArbreQuat.h contient la structure du noeud de cet arbre, ainsi que l'ensemble des signatures des fonctions qu'on peut retrouver dans le fichier AbreQuat.c.
+Dans l'exercice 3, on souhaite construire des méthodes afin de manipuler et afficher la structure Reseau. On calcule le nombre de commodités et de liaisons d'un réseau, on écrit le contenu du réseau sur un fichier et on l'affiche grâce à la fonction *afficheReseauSVG(Reseau *R, char *nomInstance);* qui crée un fichier SVG en html pour visualiser le réseau. 
 
-Le code chaineCoordMinMax est utile pour obtenir le centre.
-Le code insererNoeudArbre nous permet d'insérer un noeud en fonction de différents cas.
- # CONTINUER CETTE PARTIE !!!!
+Dans l'exercice 4, nous devons reconstruire le réseau à partir d'une table de hachage. Nous avons créé un fichier **Hachage.c** qui va contenir l'ensemble des programmes qui nous est utile tels que la création d'une clé et une fonction de hachage. On a aussi un fichier **Hachage.h** pour les signatures et la structure TableHachage.
+
+Dans l'exercice 5, la reconstruction du réseau se fait avec un arbre quaternaire. Le fichier **ArbreQuat.h** contient la structure du noeud de cet arbre, ainsi que l'ensemble des signatures des fonctions qu'on peut retrouver dans le fichier **AbreQuat.c**.
+
+Dans l'exercice 6, on crée un fichier **temps_de_calcul.c** afin de comparer les temps de calcul obtenus avec les 3 structures données. On écrit une fonction *Chaines * generationAleatoire(int nbChaines,int nbPointsChaine,int xmax,int ymax);* qui permet de créer des chaînes de points avec des valeurs passées en paramètre. On utilise cette fonction afin de déterminer la structure la plus optimale pour reconstituer le réseau en faisant varier le nombre de chaînes de 500 à 5000 et la taille de la table de hachage. 
+Des fichiers **temps_de_calcul_ha.txt** et **temps_de_calcul_lc.txt** sont crées afin de réaliser des graphes pour comparer les temps de calcul. 
+
+**Partie 3 : Optimisation du réseau**
+
+Dans l'exerice 7, notre but est d'optimiser l'utilisation des fibres optiques du réseau. On crée une structure graphe définie dans le fichier **Graphe.h** et dans le fichier **Graphe.c** on écrit une fonction *int reorganiseReseau(Reseau * r);* qui permet de calculer la plus courte châine pour chaque commodité grâce à une matrice. 
+
+**Fichiers et fonctions hors sujet**
+
+Pour tous les fichiers .c qui utilisent une fonction de type ReconstitueReseau[nom_structure] nous avons utilisé une fonction *void ajouter_voisin(Noeud *n, Noeud * voisin);* qui nous permet de simplifier la tache pour reconstituer le réseau.
+Pour chaque fichier nous avons aussi crée des fonctions afin de **libérer la mémoire alloué** pour les différentes structures.
+
+Le fichier **Makefile :** 
+Pour compiler les fichiers correspondant à une structure ou exercice spécifique il suffit de choisir une structure parmis les suivantes : [chaine, res, hachage ,arbrequat, ReconstitueReseau, temps_de_calcul, graphe]
+Tapper les instructions suivantes sur votre terminal:
+
+**make <structure choisie>**
+
+Puis pour exécuter le programme :
+
+**./<structure choisie>**
+
+Si vous voulez compiler toutes les structures ensemble, il suffit de faire :
+
+**make all**
+
+Dans le cas o`u un exécutable aura besoin d'un fichier ou entier passé en paramètre, des instructions seront affichées sur le terminal. 
 
 
 
-
-
-**Description schématique des algorithmes que nous avons crées**
+## Description schématique des algorithmes que nous avons crées
 # ALEX !!!!!!!!!!!!!!
 
 
-**Réponses aux questions**
+## Réponses aux questions
 
 **_Exercice 4, question 2_**
 Suite à notre test sur les points (x,y) avec *x* un entier allant de 1 à 10 et *y* un entier allant de 1 à 10, nous constatons que plusieurs cléfs ont la même valeurs, soit 88 cléfs sur 100 sont répétées au moins une fois sur notre test.  
@@ -73,14 +102,14 @@ Lorsqu’une arête approche du gamma, il pourrait être intéressant de recherc
 Cela pourrait être une solution pour améliorer notre programme et réduire le nombre d’arêtes qui dépassent le seuil gamma.
 
 
-**Description des jeux d'essais** 
+## Description des jeux d'essais 
 Exercice 1 : 
-Exemple d'usage : ./ChaineMain nom_fichier.cha 
+Exemple d'usage : **./ChaineMain nom_fichier.cha**
 Une structure Chaine sera créée et l'utilisateur pourra voir sur le terminal la longueur totale des chaînes et le nombre total de point.
 On lui demande s'il veut créer ou non un autre fichier avec cette chaine.
 
-Exercice 2 : La question 2.3 nous demande d'écrire un main 'ReconstitueReseau.c'.
-Exemple d'usage : ./ReconstitueReseau fichier.cha n        (n un entier entre 1 et 3 pour choisir la méthode).
+Exercice 2 : La question 2.3 nous demande d'écrire un main **ReconstitueReseau.c**
+Exemple d'usage : **./ReconstitueReseau fichier.cha n**       (n un entier entre 1 et 3 pour choisir la méthode).
 1er méthode : Liste chainéé.
 2eme méthode : Table de Hachage
 3eme méthode : Arbre quaternaire.
@@ -90,22 +119,19 @@ Ainsi qu'un fichier .html pour visualiser le réseau.
 
 
 Exercice 6 :
-La question 6.1 nous demande d'écrire un main qui exécute automatiquement les trois fonctions de reconstruction et qui calcule uniquement leur temps de calcul. Ce main est écrit dans le fichier 'temps_de_calcul.c'. 
-Exemple d'usage : ./temps_de_calcul.c nom_fichier.cha
+La question 6.1 nous demande d'écrire un main qui exécute automatiquement les trois fonctions de reconstruction et qui calcule uniquement leur temps de calcul. Ce main est écrit dans le fichier **temps_de_calcul.c**. 
+Exemple d'usage : **./temps_de_calcul.c nom_fichier.cha**
 A chaque fois que l'utilisateur va faire cette commande, cela va écrire les temps de calcul pour chacune des méthodes.
 
 Exercice 7 :
-Pour tester la fonction reorganisationReseau, nous avons décidé de créer un fichier ‘mainG.c’ qui va demander à l’utilisateur d’entrer un fichier .cha et un numéro de méthode. Le numéro de méthode permet de savoir avec quelles méthodes l’utilisateur souhaite réorganiser le réseau.
+Pour tester la fonction reorganisationReseau, nous avons décidé de créer un fichier **mainG.c** qui va demander à l’utilisateur d’entrer un fichier .cha et un numéro de méthode. Le numéro de méthode permet de savoir avec quelles méthodes l’utilisateur souhaite réorganiser le réseau.
 
 Ensuite, nous appliquons la fonction reorganisation sur le réseau qui vient d’être créé, afin de déterminer si nous parcourons chaque chaîne un nombre de fois supérieur au gamma ou non. Les arêtes qui dépassent le gamma seront affichées dans le terminal, ainsi que le nombre d’arêtes qui le dépassent.
 
-Exemple d'usage: ./graphe nom_fichier.cha n        (n un entier entre 1 et 3 pour choisir la méthode)
+Exemple d'usage: **./graphe nom_fichier.cha n** (n un entier entre 1 et 3 pour choisir la méthode)
 
 
-
-# NOAH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-**Analyse commentée des performances de nos programmmes***
+## Analyse commentée des perfov rmances de nos programmes 
 
 Quand on exécute le code de la question 6.3 qui renvoi les temps de calcul pour la fonction ReconstitueReseau de chaque structure : la liste châinée, la table de hachage et l'arbre quaternaire. 
 On fait varier la taille de la table de hachage avec les valeurs de M suivantes : 10, 50, 100, 500, 1000.

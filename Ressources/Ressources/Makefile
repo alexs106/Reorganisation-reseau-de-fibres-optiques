@@ -4,7 +4,7 @@ CFLAGS = -Wall -g -lm
 CHAINE = Chaine.c ChaineMain.c SVGwriter.c 
 OBJS_C = ${CHAINE:.c=.o}
 
-RESEAU = Chaine.c SVGwriter.c Reseau.c main2.c
+RESEAU = Chaine.c SVGwriter.c Reseau.c mainRes.c
 OBJS_R = ${RESEAU:.c=.o}
 
 HACHAGE = Chaine.c SVGwriter.c Reseau.c Hachage.c mainH.c
@@ -22,7 +22,7 @@ OBJS_TDC = ${TDC:.c=.o}
 GRAPHE = Graphe.c SVGwriter.c Reseau.c Chaine.c mainG.c Struct_File.c ArbreQuat.c Hachage.c
 OBJS_G = ${GRAPHE:.c=.o}
 
-all : chaine res hachage arbrequat
+all : chaine res hachage arbrequat ReconstitueReseau temps_de_calcul graphe
 
 chaine: ${OBJS_C}
 	${CC} -o chaine ${CFLAGS} ${OBJS_C}

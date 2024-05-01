@@ -118,7 +118,7 @@ int main(int argc,char** argv){
     fclose(fw);
  
     /*
-    //Test de la question 6.3
+    //TEST DE LA QUESTION 6.3
     double temps_lc = 0;
     double temps_lc_debut;
     double temps_lc_fin;
@@ -201,7 +201,7 @@ int main(int argc,char** argv){
         temps_h5 = ((double)(temps_h5_fin-temps_h5_debut))/CLOCKS_PER_SEC;
         temps_a = ((double)(temps_a_fin-temps_a_debut))/CLOCKS_PER_SEC;
 
-        //fprintf(f2,"Temps de calcul pour le fichier %s\n","test_graphe.txt");
+        fprintf(f2,"Temps de calcul pour le fichier %s\n","test_graphe.txt");
         fprintf(f2,"%d %lf\n",nbChaines, temps_lc);
         fprintf(f3,"%d %lf %lf %lf %lf %lf %lf\n",nbChaines, temps_h1, temps_h2, temps_h3, temps_h4, temps_h5,temps_a);
 
