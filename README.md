@@ -2,7 +2,10 @@
 
 **Alejandra MORALES SAUCEDO 21214631**
 
-## Description du projet
+## Rapport Réorganisation d'un réseau de fibres optiques
+### Année 2023-2024 LU2IN006 - Structures de Données
+
+### Description du projet
 
 Le projet a porté sur la réorganisation d'un réseau de fibres optiques d'une agglomération grace à différentes structures de données telles que une liste chaînée, une table de hachage, un arbre quaternaire et un graphe. 
 
@@ -16,7 +19,7 @@ Pour la deuxième partie, la réorganisation du réseau consiste à répartir le
 
 Un câble du réseau est un fourreau qui contient exactement *gamma* > 0 fibres optiques. Les câbles relient deux points du plan, soit des clients ou des concentrateurs qui eux permettent de relier des tronçons de fibres. Ces tronçons reliés par un même concentrateur forment une châine dans le réseau. Une châine relie deux points clients qu'on appelle une *commodité*, les extremités de cette chaîne.  
 
-## Description des structures manipulés, description globale de votre code
+### Description des structures manipulés, description globale de votre code
 
 **Partie 1 : Lecture, stockage et affichage des données**
 
@@ -53,14 +56,14 @@ Pour tous les fichiers .c qui utilisent une fonction de type ReconstitueReseau[n
 Pour chaque fichier nous avons aussi crée des fonctions afin de **libérer la mémoire alloué** pour les différentes structures.
 
 Le fichier **Makefile :** 
-Pour compiler les fichiers correspondant à une structure ou exercice spécifique il suffit de choisir une structure parmis les suivantes : [chaine, res, hachage ,arbrequat, ReconstitueReseau, temps_de_calcul, graphe]
+Pour compiler les fichiers correspondant à une structure ou exercice spécifique il suffit de choisir une structure parmis les suivantes : *[chaine, res, hachage ,arbrequat, ReconstitueReseau, temps_de_calcul, graphe]*
 Tapper les instructions suivantes sur votre terminal:
 
-**make <structure choisie>**
+**make structure_choisie**
 
 Puis pour exécuter le programme :
 
-**./<structure choisie>**
+**./structure_choisie**
 
 Si vous voulez compiler toutes les structures ensemble, il suffit de faire :
 
@@ -70,11 +73,11 @@ Dans le cas o`u un exécutable aura besoin d'un fichier ou entier passé en para
 
 
 
-## Description schématique des algorithmes que nous avons crées
+### Description schématique des algorithmes que nous avons crées
 # ALEX !!!!!!!!!!!!!!
 
 
-## Réponses aux questions
+### Réponses aux questions
 
 **_Exercice 4, question 2_**
 Suite à notre test sur les points (x,y) avec *x* un entier allant de 1 à 10 et *y* un entier allant de 1 à 10, nous constatons que plusieurs cléfs ont la même valeurs, soit 88 cléfs sur 100 sont répétées au moins une fois sur notre test.  
@@ -102,7 +105,8 @@ Lorsqu’une arête approche du gamma, il pourrait être intéressant de recherc
 Cela pourrait être une solution pour améliorer notre programme et réduire le nombre d’arêtes qui dépassent le seuil gamma.
 
 
-## Description des jeux d'essais 
+### Description des jeux d'essais 
+
 Exercice 1 : 
 Exemple d'usage : **./ChaineMain nom_fichier.cha**
 Une structure Chaine sera créée et l'utilisateur pourra voir sur le terminal la longueur totale des chaînes et le nombre total de point.
@@ -131,7 +135,7 @@ Ensuite, nous appliquons la fonction reorganisation sur le réseau qui vient d�
 Exemple d'usage: **./graphe nom_fichier.cha n** (n un entier entre 1 et 3 pour choisir la méthode)
 
 
-## Analyse commentée des perfov rmances de nos programmes 
+### Analyse commentée des performances de nos programmes 
 
 Quand on exécute le code de la question 6.3 qui renvoi les temps de calcul pour la fonction ReconstitueReseau de chaque structure : la liste châinée, la table de hachage et l'arbre quaternaire. 
 On fait varier la taille de la table de hachage avec les valeurs de M suivantes : 10, 50, 100, 500, 1000.
@@ -144,4 +148,4 @@ Cela dit, pour notre test on a décidé que la taille maximale de la table de ha
 
 Finalement, **l'arbre quaternaire** se proclame vainqueur car même dans le cas de NbChaines = 5000, son temps de calcul n'atteint jamais une seconde. Nous avons décidé de faire un graphe suplémentaire pour montrer la courte croissance du temps de calcul pour l'arbre quaternaire. 
 
-Pour conclure, on peut dire que si l'espace mémoire n'est pas un facteur important, la table de hachage d'une taille supérieur au nombre de chaînes est l'option la plus convenable. Cependant, en termes de temps de calcul, **l'arbre quaternaire** est la meilleure option pour reconstituer notre réseau de fibres optiques. 
+Pour conclure, on peut dire que si l'espace mémoire n'est pas un facteur important, la table de hachage d'une taille supérieur au nombre de chaînes est l'option la plus convenable. Cependant, en termes de temps de calcul, **l'arbre quaternaire** est la meilleure option pour reconstituer notre réseau de fibres optiques car sa complexité est en O(nlog4(n)) alors que pour les deux autres structures, la complexité est en O(n²).

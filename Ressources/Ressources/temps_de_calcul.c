@@ -54,12 +54,8 @@ Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax,int yma
 
 
 int main(int argc,char** argv){
-    /*TEST DE LA QUESTION 6.2
-    FILE *f2 = fopen("temps_de_calcul_alea.txt", "w");
-    Chaines* c = generationAleatoire(10,5,5,5);
-    ecrireChaines(c,f2);*/
 
-   /*TEST DE LA QUESTION 6.1*/
+    //TEST DE LA QUESTION 6.1
     char* nom_fichier = argv[1];
     FILE *f = fopen(nom_fichier, "r");
     if (f==NULL){
@@ -116,9 +112,16 @@ int main(int argc,char** argv){
     liberer_reseau(r_h);
     liberer_reseau(r_a);
     fclose(fw);
- 
+
+
+    /*TEST DE LA QUESTION 6.2
+    FILE *f2 = fopen("temps_de_calcul_alea.txt", "w");
+    Chaines* c = generationAleatoire(10,5,5,5);
+    ecrireChaines(c,f2);*/
+
     /*
     //TEST DE LA QUESTION 6.3
+
     double temps_lc = 0;
     double temps_lc_debut;
     double temps_lc_fin;
