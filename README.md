@@ -72,11 +72,6 @@ Si vous voulez compiler toutes les structures ensemble, il suffit de faire :
 Dans le cas o`u un exécutable aura besoin d'un fichier ou entier passé en paramètre, des instructions seront affichées sur le terminal. 
 
 
-
-### Description schématique des algorithmes que nous avons crées
-# ALEX !!!!!!!!!!!!!!
-
-
 ### Réponses aux questions
 
 **_Exercice 4, question 2_**
