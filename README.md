@@ -2,10 +2,10 @@
 
 **Alejandra MORALES SAUCEDO 21214631**
 
-## Rapport Réorganisation d'un réseau de fibres optiques
-### Année 2023-2024 LU2IN006 - Structures de Données
+# Rapport Réorganisation d'un réseau de fibres optiques
+## Année 2023-2024 LU2IN006 - Structures de Données - Sorbonne Université
 
-### Description du projet
+## Description du projet
 
 Le projet a porté sur la réorganisation d'un réseau de fibres optiques d'une agglomération grace à différentes structures de données telles que une liste chaînée, une table de hachage, un arbre quaternaire et un graphe. 
 
@@ -19,7 +19,7 @@ Pour la deuxième partie, la réorganisation du réseau consiste à répartir le
 
 Un câble du réseau est un fourreau qui contient exactement *gamma* > 0 fibres optiques. Les câbles relient deux points du plan, soit des clients ou des concentrateurs qui eux permettent de relier des tronçons de fibres. Ces tronçons reliés par un même concentrateur forment une châine dans le réseau. Une châine relie deux points clients qu'on appelle une *commodité*, les extremités de cette chaîne.  
 
-### Description des structures manipulés, description globale de votre code
+## Description des structures manipulés, description globale de votre code
 
 **Partie 1 : Lecture, stockage et affichage des données**
 
@@ -72,7 +72,7 @@ Si vous voulez compiler toutes les structures ensemble, il suffit de faire :
 Dans le cas o`u un exécutable aura besoin d'un fichier ou entier passé en paramètre, des instructions seront affichées sur le terminal. 
 
 
-### Réponses aux questions
+## Réponses aux questions
 
 **_Exercice 4, question 2_**
 Suite à notre test sur les points (x,y) avec *x* un entier allant de 1 à 10 et *y* un entier allant de 1 à 10, nous constatons que plusieurs cléfs ont la même valeurs, soit 88 cléfs sur 100 sont répétées au moins une fois sur notre test.  
@@ -100,7 +100,7 @@ Lorsqu’une arête approche du gamma, il pourrait être intéressant de recherc
 Cela pourrait être une solution pour améliorer notre programme et réduire le nombre d’arêtes qui dépassent le seuil gamma.
 
 
-### Description des jeux d'essais 
+## Description des jeux d'essais 
 
 Exercice 1 : 
 Exemple d'usage : **./ChaineMain nom_fichier.cha**
@@ -130,7 +130,7 @@ Ensuite, nous appliquons la fonction reorganisation sur le réseau qui vient d�
 Exemple d'usage: **./graphe nom_fichier.cha n** (n un entier entre 1 et 3 pour choisir la méthode)
 
 
-### Analyse commentée des performances de nos programmes 
+## Analyse commentée des performances de nos programmes 
 
 Quand on exécute le code de la question 6.3 qui renvoi les temps de calcul pour la fonction ReconstitueReseau de chaque structure : la liste châinée, la table de hachage et l'arbre quaternaire. 
 On fait varier la taille de la table de hachage avec les valeurs de M suivantes : 10, 50, 100, 500, 1000.
