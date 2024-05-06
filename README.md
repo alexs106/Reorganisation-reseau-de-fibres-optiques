@@ -3,7 +3,9 @@
 **Alejandra MORALES SAUCEDO 21214631**
 
 # Rapport Réorganisation d'un réseau de fibres optiques
-## Année 2023-2024 LU2IN006 - Structures de Données - Sorbonne Université
+## Année 2023-2024 
+## LU2IN006 - Structures de Données
+## Sorbonne Université
 
 ## Description du projet
 
